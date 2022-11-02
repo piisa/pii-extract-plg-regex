@@ -68,7 +68,7 @@ setup_args = dict(
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     entry_points={
-        "pii_extract.plugins": "detectors-regex = pii_extract_plg_regex.plugin.PluginEntryPoint"
+        "pii_extract.plugins": "piisa-detectors-regex = pii_extract_plg_regex.plugin_loader:PiiExtractPluginLoader"
     },
     include_package_data=False,
     package_data={},

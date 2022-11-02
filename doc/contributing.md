@@ -34,9 +34,9 @@ A task can be implemented with either of three shapes: regex, function or
 lass. See [task implementation] for a description of how to implement each of
 these, including where to add the required documentation explaining the task.
 
-
 An example of context validation can be seen in the [international phone
 number] task.
+
 
 [PiiEnum]: https://github.com/piisa/pii-data/src/pii_extract/types/piienum.py
 [task descriptor]: https://github.com/piisa/pii-extract-base/doc/task-descriptor.md
