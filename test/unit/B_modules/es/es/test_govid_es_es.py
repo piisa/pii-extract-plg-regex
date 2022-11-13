@@ -4,7 +4,7 @@ Test Spanish DNI & NIE
 import pytest
 
 from pii_data.types import PiiEnum, PiiEntity
-from pii_data.types.localdoc import SequenceLocalSrcDocument
+from pii_data.types.doc.localdoc import SequenceLocalSrcDocument
 from pii_extract.api import PiiProcessor
 
 from pii_extract_plg_regex.modules.es.es.govid import PII_TASKS
@@ -18,25 +18,25 @@ TESTCASES = [
     (
         "Mi DNI es 34657934-Q",
         "Mi DNI es <GOV_ID:34657934-Q>",
-        PiiEntity(PiiEnum.GOV_ID, "34657934-Q", "1", 10,
-                  lang="es", country="es", subtype="Spanish DNI", detector=1,
-                  docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "34657934-Q", "1", 10, lang="es",
+                        country="es", subtype="Spanish DNI", detector=1,
+                        docid="abcde-11111", process={"stage": "detection"})
     ),
     # A DNI without dash
     (
         "El DNI 34657934Q es válido",
         "El DNI <GOV_ID:34657934Q> es válido",
-        PiiEntity(PiiEnum.GOV_ID, "34657934Q", "2", 7,
-                  lang="es", country="es", subtype="Spanish DNI", detector=1,
-                  docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "34657934Q", "2", 7, lang="es",
+                        country="es", subtype="Spanish DNI", detector=1,
+                        docid="abcde-11111", process={"stage": "detection"})
     ),
     # A valid NIE
     (
         "El NIE es X3465793-S",
         "El NIE es <GOV_ID:X3465793-S>",
-        PiiEntity(PiiEnum.GOV_ID, "X3465793-S", "3", 10,
-                  lang="es", country="es", subtype="Spanish NIE", detector=1,
-                  docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "X3465793-S", "3", 10, lang="es",
+                        country="es", subtype="Spanish NIE", detector=1,
+                        docid="abcde-11111", process={"stage": "detection"})
     ),
     # An invalid DNI
     ("Mi DNI es 34657934-H", "Mi DNI es 34657934-H", []),
@@ -67,7 +67,7 @@ def test20_dni_extract(patch_entry_points):
     Test task processing through a PiiProcessor
     """
     proc = PiiProcessor()
-    proc.build_tasks("es", country="es", tasks=PiiEnum.GOV_ID)
+    proc.build_tasks("es", country="es", pii=PiiEnum.GOV_ID)
 
     doc = SequenceLocalSrcDocument(chunks=[c[0] for c in TESTCASES])
     doc.set_id("abcde-11111")
@@ -75,7 +75,7 @@ def test20_dni_extract(patch_entry_points):
     piic = proc(doc)
     assert len(piic) == 3
     for e, g in zip(TESTCASES, piic):
-        assert e[2].as_dict() == g.as_dict()
+        assert e[2].asdict() == g.asdict()
 
 
 def test30_dni_extract_noc(patch_entry_points):
@@ -83,11 +83,10 @@ def test30_dni_extract_noc(patch_entry_points):
     Test task processing through a PiiProcessor, different country
     """
     proc = PiiProcessor()
-    proc.build_tasks("es", country="ar", tasks=PiiEnum.GOV_ID)
+    proc.build_tasks("es", country="ar", pii=PiiEnum.GOV_ID)
 
     doc = SequenceLocalSrcDocument(chunks=[c[0] for c in TESTCASES])
     doc.set_id("abcde-11111")
 
     piic = proc(doc)
     assert len(piic) == 0
-        

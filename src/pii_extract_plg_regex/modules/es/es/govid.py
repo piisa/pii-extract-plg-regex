@@ -10,20 +10,19 @@ from typing import Iterable
 
 from stdnum.es import dni, nie
 
-from pii_data.types import PiiEnum, PiiEntity, DocumentChunk
-from pii_extract.build import BasePiiTask
+from pii_data.types import PiiEnum, PiiEntity
+from pii_data.types.doc import DocumentChunk
+from pii_extract.build.task import BaseMultiPiiTask
 
 # Regex for DNI & NIE
 _DNI_PATTERN = r"\d{6,8} -? [A-KJ-NP-TV-Z]"
 _NIE_PATTERN = r"[X-Z] \d{7} -? [A-KJ-NP-TV-Z]"
 
 
-class SpanishDniNie(BasePiiTask):
+class SpanishDniNie(BaseMultiPiiTask):
     """
-    Spanish Government-issued DNI & NIE numbers, recognize & validate
+    Spanish Government-issued identifiers: Documento Nacional de Identidad (DNI) & Número de Identificación de Extranjero (NIE)
     """
-
-    pii_name = "Spanish DNI and NIE numbers"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -31,24 +30,38 @@ class SpanishDniNie(BasePiiTask):
         self.dni = re.compile(_DNI_PATTERN, flags=re.X)
         self.nie = re.compile(_NIE_PATTERN, flags=re.X)
 
+
     def find(self, chunk: DocumentChunk) -> Iterable[PiiEntity]:
+        """
+        Find & validate instances of either DNI or NIE
+        """
+        info_dni, info_nie = self.pii_info
+
         # DNI
         for item in self.dni.finditer(chunk.data):
             item_value = item.group()
             if dni.is_valid(item_value):
-                yield PiiEntity(
-                    PiiEnum.GOV_ID, item_value, chunk.id, item.start(),
-                    country=self.country, subtype="Spanish DNI"
-                )
+                yield PiiEntity(info_dni, item_value, chunk.id, item.start())
+
         # NIE
         for item in self.nie.finditer(chunk.data):
             item_value = item.group()
             if nie.is_valid(item_value):
-                yield PiiEntity(
-                    PiiEnum.GOV_ID, item_value, chunk.id,item.start(),
-                    country=self.country, subtype="Spanish NIE"
-                )
+                yield PiiEntity(info_nie, item_value, chunk.id,item.start())
 
+
+# ---------------------------------------------------------------------
 
 # Task descriptor
-PII_TASKS = [(PiiEnum.GOV_ID, SpanishDniNie)]
+PII_TASKS = [
+    {
+        "class": "PiiTask",
+        "task": SpanishDniNie,
+        "name": "Spanish DNI and NIE numbers",
+        "pii": {
+            "type": PiiEnum.GOV_ID,
+            "subtype": ["Spanish DNI", "Spanish NIE"],
+            "method": "regex,checksum"
+        }
+    }
+]

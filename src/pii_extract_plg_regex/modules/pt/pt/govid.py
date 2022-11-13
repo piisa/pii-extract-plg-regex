@@ -10,8 +10,9 @@ from typing import Iterable
 
 from stdnum.pt import nif, cc
 
-from pii_data.types import PiiEnum, PiiEntity, DocumentChunk
-from pii_extract.build import BasePiiTask
+from pii_data.types import PiiEnum, PiiEntity
+from pii_data.types.doc import DocumentChunk
+from pii_extract.build.task import BaseMultiPiiTask
 
 
 # regex for NIF & CC
@@ -19,12 +20,13 @@ _NIF_PATTERN = r"(?: PT \x20?)? (?: \d{3} \x20 \d{3} \x20 \d{3} | \d{9} )"
 _CC_PATTERN = r"\d{8} \x20? \d \x20? [A-Z0-9]{2}\d"
 
 
-class PortugueseNifCc(BasePiiTask):
+class PortugueseNifCc(BaseMultiPiiTask):
     """
-    Portuguese Government-issued NIF & CC numbers, recognize & validate
+    Portuguese Government-issued identifiers: Número de Identificação Fiscal (NIF) & Cartão de Cidadão (CC)
     """
-
     pii_name = "Portuguese NIF and CC numbers"
+    pii_method = "regex,checksum"
+
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -32,24 +34,31 @@ class PortugueseNifCc(BasePiiTask):
         self.nif = re.compile(_NIF_PATTERN, flags=re.X)
         self.cc = re.compile(_CC_PATTERN, flags=re.X)
 
+
     def find(self, chunk: DocumentChunk) -> Iterable[PiiEntity]:
+        """
+        Find & validate instances of either NIF or CC
+        """
+        info_nif, info_cc = self.pii_info
+
         # NIF
         for item in self.nif.finditer(chunk.data):
             item_value = item.group()
             if nif.is_valid(item_value):
-                yield PiiEntity(
-                    PiiEnum.GOV_ID, item_value, chunk.id, item.start(),
-                    country=self.country, subtype="Portuguese NIF"
-                )
+                yield PiiEntity(info_nif, item_value, chunk.id, item.start())
         # CC
         for item in self.cc.finditer(chunk.data):
             item_value = item.group()
             if cc.is_valid(item_value):
-                yield PiiEntity(
-                    PiiEnum.GOV_ID, item_value, chunk.id, item.start(),
-                    country=self.country, subtype="Portuguese CC"
-                )
+                yield PiiEntity(info_cc, item_value, chunk.id, item.start())
 
 
 # Task descriptor
-PII_TASKS = [(PiiEnum.GOV_ID, PortugueseNifCc)]
+PII_TASKS = {
+    "class": "PiiTask",
+    "task": PortugueseNifCc,
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": ["Portuguese NIF", "Portuguese CC"]
+    }
+}

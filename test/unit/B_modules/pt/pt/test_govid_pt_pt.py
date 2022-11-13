@@ -4,7 +4,7 @@ Test Portuguese NIF & CC
 import pytest
 
 from pii_data.types import PiiEnum, PiiEntity
-from pii_data.types.localdoc import SequenceLocalSrcDocument
+from pii_data.types.doc.localdoc import SequenceLocalSrcDocument
 from pii_extract.api import PiiProcessor
 
 from pii_extract_plg_regex.modules.pt.pt.govid import PII_TASKS
@@ -17,25 +17,28 @@ TESTCASES = [
     (
         "Meu NIF é PT 123 456 789",
         "Meu NIF é <GOV_ID:PT 123 456 789>",
-        PiiEntity(PiiEnum.GOV_ID, "PT 123 456 789", "1", 10,
-                  lang="pt", country="pt", subtype="Portuguese NIF",
-                  detector=1, docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "PT 123 456 789", "1", 10,
+                        lang="pt", country="pt", subtype="Portuguese NIF",
+                        detector=1, docid="abcde-11111", status="detected",
+                        process={"stage": "detection"})
     ),
     # A NIF without spacing or prefix
     (
         "O NIF 123456789 é valido",
         "O NIF <GOV_ID:123456789> é valido",
-        PiiEntity(PiiEnum.GOV_ID, "123456789", "2", 6,
-                  lang="pt", country="pt", subtype="Portuguese NIF",
-                  detector=1, docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "123456789", "2", 6,
+                        lang="pt", country="pt", subtype="Portuguese NIF",
+                        detector=1, docid="abcde-11111",
+                        process={"stage": "detection"})
     ),
     # A valid CC
     (
         "O CC é 00000000 0 ZZ4",
         "O CC é <GOV_ID:00000000 0 ZZ4>",
-        PiiEntity(PiiEnum.GOV_ID, "00000000 0 ZZ4", "3", 7,
-                  lang="pt", country="pt", subtype="Portuguese CC",
-                  detector=1, docid="abcde-11111")
+        PiiEntity.build(PiiEnum.GOV_ID, "00000000 0 ZZ4", "3", 7,
+                        lang="pt", country="pt", subtype="Portuguese CC",
+                        detector=1, docid="abcde-11111",
+                        process={"stage": "detection"})
     ),
     # An invalid NIF
     ("Meu NIF é PT 123 456 788", "Meu NIF é PT 123 456 788", []),
@@ -60,10 +63,10 @@ def patch_entry_points(monkeypatch):
 
 def test20_nif_cc_extract(patch_entry_points):
     proc = PiiProcessor()
-    proc.build_tasks("pt", country="pt", tasks=PiiEnum.GOV_ID)
+    proc.build_tasks("pt", country="pt", pii=PiiEnum.GOV_ID)
 
     doc = SequenceLocalSrcDocument(chunks=[c[0] for c in TESTCASES])
     doc.set_id("abcde-11111")
 
     for e, g in zip(TESTCASES, proc(doc)):
-        assert e[2].as_dict() == g.as_dict()
+        assert e[2].asdict() == g.asdict()

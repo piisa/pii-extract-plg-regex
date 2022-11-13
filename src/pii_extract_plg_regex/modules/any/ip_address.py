@@ -15,11 +15,11 @@ _IP_PATTERN = r"""
 
 PII_TASKS = [
     {
-        "pii": PiiEnum.IP_ADDRESS,
-        "type": "regex",
+        "class": "regex",
         "task": _IP_PATTERN,
         "name": "ip address",
         "doc": "match IP addresses, with context",
+        "pii": PiiEnum.IP_ADDRESS,
         "context": {"value": "ip", "type": "word", "width": 16},
     }
 ]

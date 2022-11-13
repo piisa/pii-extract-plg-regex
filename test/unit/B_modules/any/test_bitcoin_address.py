@@ -10,11 +10,11 @@ TESTCASES = [
     # A valid bitcoin address
     (
         "BTC address: 1JayVxfVgdaFKirkZTZVK4CdRnFDdFNENN",
-        "BTC address: <BITCOIN_ADDRESS:1JayVxfVgdaFKirkZTZVK4CdRnFDdFNENN>",
+        "BTC address: <BLOCKCHAIN_ADDRESS:1JayVxfVgdaFKirkZTZVK4CdRnFDdFNENN>",
     ),
     (
         "BTC address: bc1qwxxvjxlakxe9rmxcphh4yy8a2t6z00k4gc4mpj",
-        "BTC address: <BITCOIN_ADDRESS:bc1qwxxvjxlakxe9rmxcphh4yy8a2t6z00k4gc4mpj>",
+        "BTC address: <BLOCKCHAIN_ADDRESS:bc1qwxxvjxlakxe9rmxcphh4yy8a2t6z00k4gc4mpj>",
     ),
     # An invalid bitcoin address
     (

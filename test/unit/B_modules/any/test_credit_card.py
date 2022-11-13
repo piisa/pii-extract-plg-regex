@@ -5,7 +5,7 @@ Test credit card numbers
 import pytest
 
 from pii_data.types import PiiEnum
-from pii_data.types.localdoc import SequenceLocalSrcDocument
+from pii_data.types.doc.localdoc import SequenceLocalSrcDocument
 from pii_extract.api import PiiProcessor
 
 from pii_extract_plg_regex.modules.any.credit_card import PII_TASKS
@@ -68,7 +68,7 @@ def test20_credit_card_stats(patch_entry_points):
     Test task processing through a PiiProcessor
     """
     obj = PiiProcessor()
-    obj.build_tasks("es", tasks=PiiEnum.CREDIT_CARD)
+    obj.build_tasks("es", pii=PiiEnum.CREDIT_CARD)
     doc = SequenceLocalSrcDocument(chunks=[c[0] for c in TESTCASES])
     obj(doc)
     assert obj.get_stats() == {"calls": 1, "entities": 4, "CREDIT_CARD": 4}

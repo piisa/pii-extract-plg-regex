@@ -18,11 +18,14 @@ PATTERN_INT_PHONE = r"""
 
 PII_TASKS = [
     {
-        "pii": PiiEnum.PHONE_NUMBER,
-        "type": "regex",
+        "class": "regex",
         "task": PATTERN_INT_PHONE,
         "name": "international phone number",
-        "doc": "detect phone numbers that use international notation. Uses context",
-        "context": {"value": ["ph", "phone", "fax"], "width": [16, 0], "type": "word"},
+        "doc": "detect phone numbers written using international notation",
+        "pii": {
+            "type": PiiEnum.PHONE_NUMBER,
+            "subtype": "international",
+            "context": {"value": ["ph", "phone", "fax"], "width": [16, 0], "type": "word"},
+        }
     }
 ]

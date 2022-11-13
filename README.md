@@ -18,10 +18,8 @@ The package
 
 ## Usage
 
-The package does not have any user-facing entry points. Instead, upon
-installation it defines a plugin entry point. This plugin is automatically
-picked up by executing scripts and classes in [pii-extract-base], and thus its
-functionality is exposed to it.
+The package does not have any user-facing entry points, and it is [used
+automatically] by the PIISA framework.
 
 
 ## Building
@@ -50,4 +48,5 @@ To add a new PII processing task, please see the [contributing instructions].
 [python-stdnum]: https://github.com/arthurdejong/python-stdnum
 [Makefile]: Makefile
 [pytest]: https://docs.pytest.org
+[usage]: doc/usage.md
 [contributing instructions]: doc/contributing.md
