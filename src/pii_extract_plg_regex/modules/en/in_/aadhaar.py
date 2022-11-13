@@ -25,4 +25,12 @@ def aadhaar_number(doc: str) -> Iterable[str]:
             yield candidate
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, aadhaar_number)]
+PII_TASKS = {
+    "class": "callable",
+    "task": aadhaar_number,
+    "method": "regex,checksum",
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "Indian Aadhaar number"
+    }
+}

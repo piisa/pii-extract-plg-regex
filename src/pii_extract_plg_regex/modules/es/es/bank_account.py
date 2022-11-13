@@ -37,4 +37,11 @@ def spanish_bank_ccc(text: str) -> Iterable[str]:
 
 # ---------------------------------------------------------------------
 
-PII_TASKS = [(PiiEnum.BANK_ACCOUNT, spanish_bank_ccc)]
+PII_TASKS = [
+    {
+        "class": "callable",
+        "task": spanish_bank_ccc,
+        "pii": PiiEnum.BANK_ACCOUNT,
+        "method": "soft-regex,checksum"
+    }
+]

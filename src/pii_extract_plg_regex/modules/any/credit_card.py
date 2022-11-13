@@ -12,8 +12,9 @@ from stdnum import luhn
 
 from typing import Iterable
 
-from pii_data.types import PiiEnum, PiiEntity, DocumentChunk
-from pii_extract.build import BasePiiTask
+from pii_data.types import PiiEnum, PiiEntity
+from pii_data.types.doc import DocumentChunk
+from pii_extract.build.task import BasePiiTask
 
 
 # ----------------------------------------------------------------------------
@@ -37,10 +38,10 @@ _REGEX_CC_FULL = None
 
 class CreditCard(BasePiiTask):
     """
-    Credit card numbers for most international credit cards (detect & validate)
+    Credit card numbers for most international credit cards
     """
-
     pii_name = "standard credit card"
+    pii_method = "regex,checksum"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -57,10 +58,9 @@ class CreditCard(BasePiiTask):
             cc_value = cc.group()
             # strip spaces and dashes
             strip_cc = re.sub(r"[ -]+", "", cc_value)
-            # now validate the credit card number
+            # now check against a more strict regex and validate the number
             if re.fullmatch(_REGEX_CC_FULL, strip_cc) and luhn.is_valid(strip_cc):
-                yield PiiEntity(PiiEnum.CREDIT_CARD, cc_value, chunk.id,
-                                cc.start(), subtype=CreditCard.pii_name)
+                yield PiiEntity(self.pii_info, cc_value, chunk.id, cc.start())
 
 
 # ---------------------------------------------------------------------

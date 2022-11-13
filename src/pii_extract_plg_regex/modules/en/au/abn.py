@@ -24,4 +24,12 @@ def australian_business_number(doc: str) -> Iterable[str]:
             yield candidate
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, australian_business_number)]
+PII_TASKS = {
+    "class": "callable",
+    "task": australian_business_number,
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "Australian Business Number",
+        "method": "weak-regex,checksum"
+    }
+}

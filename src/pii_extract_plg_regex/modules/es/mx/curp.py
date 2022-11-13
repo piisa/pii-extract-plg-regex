@@ -13,7 +13,7 @@ from typing import Iterable
 from pii_data.types import PiiEnum
 
 
-_CURP_PATTERN = r"[A-Z] [AEIOU] [A-Z]{2} \d{6} [HM] [A-Z]{5} [0-9A-Z] \d"
+_CURP_PATTERN = r"\b [A-Z] [AEIOU] [A-Z]{2} \d{6} [HM] [A-Z]{5} [0-9A-Z] \d \b"
 _CURP_REGEX = re.compile(_CURP_PATTERN, flags=re.X)
 
 
@@ -26,4 +26,12 @@ def curp(doc: str) -> Iterable[str]:
             yield candidate
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, curp)]
+PII_TASKS = {
+    "class": "callable",
+    "task": curp,
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "Clave Única de Registro de Población",
+        "method": "strong-regex,checksum"
+    }
+}

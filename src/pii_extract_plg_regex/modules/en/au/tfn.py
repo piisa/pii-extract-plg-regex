@@ -24,4 +24,4 @@ def tax_file_number(doc: str) -> Iterable[str]:
             yield candidate
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, tax_file_number)]
+PII_TASKS = [(PiiEnum.GOV_ID, tax_file_number, "Australian Tax File Number")]

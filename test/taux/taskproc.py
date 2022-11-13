@@ -1,24 +1,41 @@
+"""
+Some utilities to help when testing tasks
+"""
 
 from operator import attrgetter
 from itertools import chain
 
 from typing import Dict, List, Tuple, Iterable
 
-from pii_data.types import DocumentChunk, PiiEntity
+from pii_data.types import PiiEntity
+from pii_data.types.doc import DocumentChunk
 from pii_extract.build.task import BasePiiTask
-from pii_extract.build.parser import build_tasklist, TYPE_TASK_LIST
-from pii_extract.load.task_collection import build_task
+from pii_extract.gather.parser import parse_task_descriptor, RawTaskDefaults
+from pii_extract.gather.parser.defs import TYPE_TASKD
+from pii_extract.build.build import build_task
 
 
 # -------------------------------------------------------------------------
 
-def pii_build_tasks(tasks: TYPE_TASK_LIST, defaults: Dict = None):
-    tl = build_tasklist(tasks, defaults)
-    return [build_task(t) for t in tl]
+def pii_build_tasks(tasks: Iterable[TYPE_TASKD],
+                    defaults: Dict = None) -> Iterable[BasePiiTask]:
+    """
+    Build a list of task objects from its raw descriptors
+    """
+    if isinstance(tasks, dict):
+        tasks = [tasks]
+    reformat = RawTaskDefaults(defaults, normalize=True)
+    for tdesc in reformat(tasks):
+        tdef = parse_task_descriptor(tdesc)
+        #print("TDESC", tdesc, "TDEF", tdef, sep="\n")
+        yield build_task(tdef)
 
 
 def pii_detect(chunk: DocumentChunk,
                tasklist: List[BasePiiTask]) -> Iterable[PiiEntity]:
+    """
+    Perform PII detection
+    """
     return chain.from_iterable(t(chunk) for t in tasklist)
 
 
@@ -50,7 +67,7 @@ def check_tasks(taskdef: List, defaults: Dict,
         :param defaults: defaults for task definitions
         :param testcases: a list of pairs (source-text, replaced-text)
     """
-    tlist = pii_build_tasks(taskdef, defaults)
+    tlist = list(pii_build_tasks(taskdef, defaults))
     for tc in testcases:
         chunk = DocumentChunk('1', tc[0])
         pii = pii_detect(chunk, tlist)
