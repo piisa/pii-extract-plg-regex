@@ -32,4 +32,4 @@ def ric_or_passport(doc: str) -> Iterable[str]:
             yield g.group(2)
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, ric_or_passport)]
+PII_TASKS = [(PiiEnum.GOV_ID, ric_or_passport, "RIC & Passport")]

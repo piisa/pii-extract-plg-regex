@@ -31,5 +31,5 @@ PII_TASKS = [
         _PATTERNS["PHONE_NUMBER"],
         "Chinese Home Phone & Cell Phone numbers",
     ),
-    (PiiEnum.DISEASE, _PATTERNS["DISEASE"], "Disease names for Chinese"),
+    (PiiEnum.MEDICAL, _PATTERNS["DISEASE"], "disease"),
 ]

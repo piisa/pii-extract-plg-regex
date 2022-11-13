@@ -13,7 +13,7 @@ from typing import Iterable
 from pii_data.types import PiiEnum
 
 
-_SIN_REGEX = re.compile(r"\d{3}[-\ ]\d{3}[-\ ]\d{3}", flags=re.X)
+_SIN_REGEX = re.compile(r"\b \d{3} [-\ ] \d{3} [-\ ] \d{3} \b", flags=re.X)
 
 
 def social_insurance_number(doc: str) -> Iterable[str]:
@@ -25,4 +25,12 @@ def social_insurance_number(doc: str) -> Iterable[str]:
             yield candidate
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, social_insurance_number)]
+PII_TASKS = {
+    "class": "callable",
+    "task": social_insurance_number,
+    "method": "regex,checksum",
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "Canadian Social Insurance Number"
+    }
+}

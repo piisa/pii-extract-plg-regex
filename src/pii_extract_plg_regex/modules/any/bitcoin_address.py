@@ -41,4 +41,4 @@ def bitcoin_address(text: str) -> Iterable[str]:
 
 # ---------------------------------------------------------------------
 
-PII_TASKS = [(PiiEnum.BITCOIN_ADDRESS, bitcoin_address)]
+PII_TASKS = [(PiiEnum.BLOCKCHAIN_ADDRESS, bitcoin_address, "bitcoin")]
