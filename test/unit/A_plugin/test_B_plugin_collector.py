@@ -24,7 +24,7 @@ def test10_taskdict_lang(fixture_entry_points):
     """
     piic = get_task_collection()
     got = piic.language_list()
-    assert ['any', 'en', 'es', 'fr', 'pt', 'zh'] == got
+    assert ['any', 'en', 'es', 'fr', 'pt', 'ro', 'zh'] == got
 
 
 def test20_taskdict_countries(fixture_entry_points):

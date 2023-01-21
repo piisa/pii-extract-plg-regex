@@ -8,30 +8,42 @@ import re
 
 from stdnum.mx import curp as stdnum_curp
 
-from typing import Iterable
+from typing import Iterable, Tuple
 
 from pii_data.types import PiiEnum
 
 
 _CURP_PATTERN = r"\b [A-Z] [AEIOU] [A-Z]{2} \d{6} [HM] [A-Z]{5} [0-9A-Z] \d \b"
-_CURP_REGEX = re.compile(_CURP_PATTERN, flags=re.X)
 
+# -------------------------------------------------------------------------
 
-def curp(doc: str) -> Iterable[str]:
+# compiled regex
+_REGEX = None
+
+def Mexican_CURP(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Mexican Clave Única de Registro de Población (detect and validate)
+    Mexican Clave Única de Registro de Población
     """
-    for candidate in _CURP_REGEX.findall(doc):
-        if stdnum_curp.is_valid(candidate):
-            yield candidate
+    # Compile regex if needed
+    global _REGEX
+    if _REGEX is None:
+        _REGEX = re.compile(_CURP_PATTERN, flags=re.X)
 
+    # Find all instances
+    for match in _REGEX.finditer(text):
+        item_value = match.group()
+        if stdnum_curp.is_valid(item_value):
+            yield item_value, match.start()
+
+
+# -------------------------------------------------------------------------
 
 PII_TASKS = {
     "class": "callable",
-    "task": curp,
+    "task": Mexican_CURP,
     "pii": {
         "type": PiiEnum.GOV_ID,
-        "subtype": "Clave Única de Registro de Población",
+        "subtype": "Mexican CURP",
         "method": "strong-regex,checksum"
     }
 }

@@ -29,6 +29,7 @@ def test30_tasklist_filter():
     """
     Test list of tasks, for specific PII types
     """
+    # Fetch only GOV_ID & CREDIT_CARD tasks
     config = {
         defs.FMT_CONFIG: {
             "pii_filter": [PiiEnum.GOV_ID, PiiEnum.CREDIT_CARD]
@@ -38,4 +39,4 @@ def test30_tasklist_filter():
     tl = list(ep.get_plugin_tasks())
 
     print([(t["pii"][0]["type"], t["pii"][0]["country"]) for t in tl])
-    assert len(tl) == 17
+    assert len(tl) == 19

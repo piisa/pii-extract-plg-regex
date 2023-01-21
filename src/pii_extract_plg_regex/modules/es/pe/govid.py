@@ -20,7 +20,8 @@ _DNI_PATTERN_FULL = r"\b \d{8} - \d \b"
 
 class PeruvianDniFull(BasePiiTask):
     """
-    Match a Peru DNI number, and validate the checksum digit
+    Match a Peru DNI number, and validate the checksum digit, if present, else
+    use context.
     """
 
     def __init__(self, **kwargs):

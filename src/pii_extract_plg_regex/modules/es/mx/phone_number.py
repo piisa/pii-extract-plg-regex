@@ -24,12 +24,12 @@ CONTEXT_REGEX = r"""
 # ----------------------------------------------------------------------------
 
 
-def Argentinian_phone_number(text: str) -> Iterable[str]:
+def Mexican_phone_number(text: str) -> Iterable[str]:
     """
-    Argentinian Phone Numbers
+    Mexican Phone Numbers
     """
     # Compile regex if needed
-    for match in phonenumbers.PhoneNumberMatcher(text, "AR"):
+    for match in phonenumbers.PhoneNumberMatcher(text, "MX"):
         yield match.raw_string
 
 
@@ -37,10 +37,10 @@ def Argentinian_phone_number(text: str) -> Iterable[str]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": Argentinian_phone_number,
+    "task": Mexican_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "Argentinian phone number",
+        "subtype": "Mexican phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

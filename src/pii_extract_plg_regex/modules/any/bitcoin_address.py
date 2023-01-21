@@ -18,25 +18,30 @@ from pii_data.types import PiiEnum
 
 # regex for the three types of bitcoin addresses
 _BITCOIN_PATTERN = (
-    r"( [13] ["
-    + bitcoin._base58_alphabet
-    + "]{25,34}"
-    + "| bc1 ["
-    + bitcoin._bech32_alphabet
-    + "]{8,87})"
+    r"\b (?: [13] [" + bitcoin._base58_alphabet + "]{25,34} |"
+    + "bc1 [" + bitcoin._bech32_alphabet + r"]{8,87} ) \b"
 )
 
-_REGEX_BITCOIN = re.compile(_BITCOIN_PATTERN, flags=re.X)
+
+# compiled regex
+_REGEX = None
 
 
 def bitcoin_address(text: str) -> Iterable[str]:
     """
     Bitcoin addresses (P2PKH, P2SH and Bech32), recognize & validate
     """
+    # Compile regex if needed
+    global _REGEX
+    if _REGEX is None:
+        _REGEX = re.compile(_BITCOIN_PATTERN, flags=re.X)
+
     # Find and validate candidates
-    for ba in _REGEX_BITCOIN.findall(text):
-        if bitcoin.is_valid(ba):
-            yield ba
+    # Find all instances
+    for match in _REGEX.finditer(text):
+        item_value = match.group()
+        if bitcoin.is_valid(item_value):
+            yield item_value, match.start()
 
 
 # ---------------------------------------------------------------------

@@ -18,10 +18,13 @@ repository with the following changes:
       function or class), see below
     * The [task descriptor], a list containing all defined tasks (or a single
 	  task descriptor). The list variable *must* be named `PII_TASKS`
- 5. Finally, add a unit test to check the validity for the task code, in the
+ 5. Then, add a unit test to check the validity for the task code, in the
     proper place under [test/unit/B_modules]. 
-	
-	
+ 6. Finally, update the [taxcount] dictionary used in unit tests to verify the
+    total number of tasks available. Depending on the task type, it might
+	be needed to update other unit tests.
+
+
 ## Task implementation
 
 A task can be implemented with either of three shapes: regex, function or
@@ -51,16 +54,26 @@ adding to the `find()` method (you can check the [credit card] task as an
 example).
 
 A simpler possibility is to use the capacities provided by the [python-stdnum]
-Python package, which provides code to validate more than a hundred identifiers
-and codes from many countries (and is a declared dependency for the
-`pii-extract-plg-regex` package, so it is guaranteed to be available).
-
-For this the [callable implementation] is often adequate, because it can be
+Python package (see below in [#auxiliary-libraries]). For this the [callable implementation] is often adequate, because it can be
 used to perform these additional operations on regex matches easily. Two
 examples of such implementations are:
  
  * [bitcoin address]
  * [australian tax file number]
+
+
+### Auxiliary libraries
+
+The following python packages are already used and declared as dependencies
+for the `pii-extract-plg-regex` package, so they are guaranteed to be
+available:
+
+ * [regex] is a Python Regular Expression library, backwards-compatible with the
+   standard `re` module, but with additional functionality (e.g. support for
+   management of Unicode codepoints, blocks and scripts)
+ * [python-stdnum] provides functions to validate more than a hundred
+   identifiers and codes from many countries
+ * [phonenumbers] can parse and check telephone numbers from all over the world
 
 
 ## Unit tests
@@ -101,10 +114,13 @@ You can see some examples of unit tests:
 [test for bitcoin address]: ../test/unit/B_modules/any/test_bitcoin_address.py
 [test for emails]: ../test/unit/B_modules/any/test_email.py
 [test for credit card]: ../test/unit/B_modules/any/test_credit_card.py
+[taxcount]: ../test/taux/taxcount.py
 
 [modules]: ../src/pii_extract_plg_regex/modules
 
 [ISO 639-1]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 [ISO 3166-1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
+[regex]: https://github.com/mrabarnett/mrab-regex
 [python-stdnum]: https://github.com/arthurdejong/python-stdnum
+[phonenumbers]: https://github.com/daviddrysdale/python-phonenumbers
