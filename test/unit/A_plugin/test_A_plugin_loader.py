@@ -38,5 +38,5 @@ def test30_tasklist_filter():
     ep = mod.PiiExtractPluginLoader(config=config)
     tl = list(ep.get_plugin_tasks())
 
-    print([(t["pii"][0]["type"], t["pii"][0]["country"]) for t in tl])
+    #print([(t["pii"][0]["type"], t["pii"][0]["country"]) for t in tl])
     assert len(tl) == 19

@@ -1,0 +1,2 @@
+0.1.0
+ * split from the old `pii-manager`, as a pii-extract plugin

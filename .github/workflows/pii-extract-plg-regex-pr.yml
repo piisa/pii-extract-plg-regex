@@ -1,0 +1,62 @@
+on:
+   pull_request:
+     branches:
+      - main
+     paths:
+      - 'src/**'
+      - 'test/**'
+      - 'setup.py'
+      - 'Makefile'
+      - 'requirements.txt'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Checkout package repository
+      uses: actions/checkout@v3
+      with:
+        path: pii-extract-plg-regex
+    - name: Checkout pii-data dependency
+      uses: actions/checkout@main
+      with:
+        repository: piisa/pii-data
+        path: pii-data
+    - name: Checkout pii-extract-base dependency
+      uses: actions/checkout@main
+      with:
+        repository: piisa/pii-extract-base
+        path: pii-extract-base
+    - name: Create venv
+      run: |
+        cd pii-extract-plg-regex
+        VENV="$GITHUB_WORKSPACE/venv" PYTHON="python${{matrix.python-version}}" make venv
+    - name: Install pii-data from local
+      run: |
+        cd pii-data
+        VENV=$GITHUB_WORKSPACE/venv make install
+    - name: Install pii-extract-base from local
+      run: |
+        cd pii-extract-base
+        VENV=$GITHUB_WORKSPACE/venv make install
+    - name: Install package dependencies
+      run: |
+        cd pii-extract-plg-regex
+        "$GITHUB_WORKSPACE/venv/bin/pip" install -r requirements.txt
+    - name: Install main package
+      run: |
+        cd pii-extract-plg-regex
+        VENV="$GITHUB_WORKSPACE/venv" make install
+    - name: Test with pytest
+      run: |
+        cd pii-extract-plg-regex
+        VENV="$GITHUB_WORKSPACE/venv" make unit-verbose

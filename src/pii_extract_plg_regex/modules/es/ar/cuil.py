@@ -49,7 +49,6 @@ def Argentinian_CUIL(text: str) -> Iterable[str]:
     for match in _REGEX.finditer(text):
         item = match.group()
         if cuit.is_valid(item):
-            print("VALID", item)
             yield item, match.start()
 
 

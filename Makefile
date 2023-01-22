@@ -14,8 +14,8 @@ NAME := pii-extract-plg-regex
 #   3. a default
 VENV ?= $(shell echo $${VIRTUAL_ENV:-/opt/venv/pii})
 
-BASE_PYTHON := python3.8
-PYTHON ?= $(VENV)/bin/python3
+PYTHON ?= python3.8
+VENV_PYTHON ?= $(VENV)/bin/python3
 
 # --------------------------------------------------------------------------
 
@@ -29,6 +29,7 @@ PKGFILE := dist/$(NAME)-$(VERSION).tar.gz
 
 all:
 	@echo "VERSION = $(VERSION)"
+	@echo "use 'make pkg' to build the package"
 
 build pkg: $(PKGFILE)
 
@@ -41,11 +42,12 @@ version:
 	@echo "$(VERSION)"
 
 backup: version
-	tar cvjf pii-extract-plg-regex-$(VERSION).tgz \
-	--exclude=__pycache__ --exclude=pii_extract_plg_regex.egg-info \
-	doc src test \
-	CHANGES.txt LICENSE README.md \
-	Makefile MANIFEST.in requirements.txt setup.py
+	tar cvjf $(NAME)-$(VERSION).tgz \
+	  --exclude=__pycache__ --exclude=pii_extract_plg_regex.egg-info \
+	  doc src test \
+	  CHANGES.txt LICENSE README.md \
+	  Makefile MANIFEST.in requirements.txt setup.py
+	@echo "** Created $(NAME)-$(VERSION).tgz"
 
 # --------------------------------------------------------------------------
 
@@ -60,7 +62,8 @@ unit: venv pytest
 	PYTHONPATH=src:test $(VENV)/bin/pytest $(ARGS) $(TEST)
 
 unit-verbose: venv pytest
-	PYTHONPATH=src:test $(VENV)/bin/pytest -vv --capture=no $(ARGS) $(TEST)
+	PYTHONPATH=src:test \
+		$(VENV)/bin/pytest -vv --capture=no $(ARGS) $(TEST)
 
 unit-full: venv pytest
 	PYTHONPATH=src:test:../pii-data/src:../pii-extract-base/src \
@@ -69,9 +72,9 @@ unit-full: venv pytest
 # --------------------------------------------------------------------------
 
 $(PKGFILE): $(VERSION_FILE) setup.py
-	$(PYTHON) setup.py sdist
+	$(VENV_PYTHON) setup.py sdist
 
-install: $(PKGFILE)
+install: $(PKGFILE) venv
 	$(VENV)/bin/pip install $(PKGFILE)
 
 uninstall:
@@ -82,7 +85,7 @@ reinstall: uninstall clean pkg install
 
 $(VENV):
 	BASE=$$(basename "$@"); test -d "$$BASE" || mkdir -p "$$BASE"
-	$(BASE_PYTHON) -m venv $@
+	$(PYTHON) -m venv $@
 	$@/bin/pip install --upgrade pip
 	$@/bin/pip install wheel
 	$@/bin/pip install -r requirements.txt
@@ -93,14 +96,16 @@ $(VENV)/bin/pytest:
 
 # -----------------------------------------------------------------------
 
-$(VENV)/bin/twine:
+TWINE := $(VENV)/bin/twine
+
+$(TWINE):
 	$(VENV)/bin/pip install twine
 
-upload-check: $(PKGFILE) $(VENV)/bin/twine
-	$(VENV)/bin/twine check $(PKGFILE)
+upload-check: $(PKGFILE) $(TWINE)
+	$(TWINE) check $(PKGFILE)
 
-upload-test: $(PKGFILE)
-	$(VENV)/bin/twine upload --repository pypitest $(PKGFILE)
+upload-test: $(PKGFILE) $(TWINE)
+	$(TWINE) upload --repository pypitest $(PKGFILE)
 
-upload: $(PKGFILE)
-	$(VENV)/bin/twine upload $(PKGFILE)
+upload: $(PKGFILE) $(TWINE)
+	$(TWINE) upload $(PKGFILE)
