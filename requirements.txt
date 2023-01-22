@@ -1,0 +1,6 @@
+python-stdnum >=1.17,<2.0
+phonenumbers >= 8.13.4, <9.0.0
+regex >= 2021.11.10
+
+pii-data >= 0.2.0, <1.0.0
+pii-extract-base >= 0.2.0, <1.0.0
