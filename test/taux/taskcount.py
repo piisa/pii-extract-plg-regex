@@ -9,7 +9,7 @@ TASK_COUNT = {
         "ca": 1,
         "gb": 1,
         "in": 1,
-        "us": 1
+        "us": 2
     },
     "es": {
         "any": 1,

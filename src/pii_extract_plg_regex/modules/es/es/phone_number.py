@@ -15,7 +15,7 @@ from pii_data.types import PiiEnum
 # Regex for mobile & landline phone numbers.
 # Also includes the 016 Domestic abuse helpline, which by law cannot appear in phone bills
 PHONE_REGEX = r"""
-  (?<!\w)
+  (?<![\w\+])
   (?:
      \d{3} \s? \d{3} \s? \d{3}
      |
@@ -68,11 +68,14 @@ def spanish_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 PII_TASKS = {
     "class": "callable",
     "task": spanish_phone_number,
-    "pii": PiiEnum.PHONE_NUMBER,
-    "method": "soft-regex,context",
-    "context": {
-        "type": "regex",
-        "value": CONTEXT_REGEX,
-        "width": [64, 64]
+    "pii": {
+        "type": PiiEnum.PHONE_NUMBER,
+        "subtype": "Spanish phone number",
+        "method": "soft-regex,context",
+        "context": {
+            "type": "regex",
+            "value": CONTEXT_REGEX,
+            "width": [64, 64]
+        }
     }
 }
