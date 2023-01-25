@@ -1,5 +1,6 @@
 """
-US phone numbers
+UK phone numbers
+
 """
 import re
 
@@ -9,15 +10,22 @@ import phonenumbers
 
 from pii_data.types import PiiEnum
 
-# Regex for phone numbers
+# Regex for UK phone numbers
 PHONE_REGEX = r"""
-   (?<! \w )
-   (?: 1[- ] )?
-   (?: \( \d{3} \) | \d{3} )
-   [- ]?
-   \d{3} [- ]? \d{4}
+   (?<! [\(\w] )
+   (?:
+      07\d{3} \s? \d{3} \s? \d{3} |                       # mobile
+      (?P<p1>\()? 0\d{2} (?(p1)\)) \s? \d{4} \s? \d{4} |  # 3-digit area code
+      (?P<p2>\()? 0\d{3} (?(p2)\)) \s? \d{3} \s? \d{4} |  # 4-digit area code
+      (?P<p3>\()? 0\d{4} (?(p3)\)) \s? \d{2} \s? \d{4} |  # 5-digit area code
+      (?P<p4>\()? 0\d{3} \s? \d{2} (?(p4)\)) \s?          # 6-digit area code
+         (?:
+            \d{2} \s? \d{3} | \d{4}
+         )
+   )
    (?! [-\w] )
 """
+
 
 # Context that must be found around the phone number
 CONTEXT_REGEX = r"""
@@ -36,9 +44,9 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def US_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def UK_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    US Phone Numbers
+    UK Phone Numbers
     """
     # Compile regex if needed
     global _REGEX
@@ -48,8 +56,8 @@ def US_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     # Find all instances
     for match in _REGEX.finditer(text):
         item_value = match.group()
-        ph = phonenumbers.parse(item_value, "US")
-        if phonenumbers.is_valid_number_for_region(ph, "US"):
+        ph = phonenumbers.parse(item_value, "GB")
+        if phonenumbers.is_valid_number_for_region(ph, "GB"):
             yield item_value, match.start()
 
 # ---------------------------------------------------------------------
@@ -57,10 +65,10 @@ def US_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": US_phone_number,
+    "task": UK_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "US phone number",
+        "subtype": "UK phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

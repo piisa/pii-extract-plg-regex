@@ -1,3 +1,7 @@
+0.1.2
+ * improvements in debug output
+ * added phone number for UK
+ 
 0.1.1
  * fix usage of libphonenumber -- always use a front-end regex
  * added phone number for USA

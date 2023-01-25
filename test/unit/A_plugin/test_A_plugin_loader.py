@@ -1,6 +1,6 @@
 from itertools import chain
 from pii_data.types import PiiEnum
-from pii_extract_plg_regex import defs
+from pii_extract_plg_regex import defs, VERSION
 import pii_extract_plg_regex.plugin_loader as mod
 
 from taux.taskcount import TASK_COUNT
@@ -11,7 +11,7 @@ def test10_constructor():
     Test basic construction
     """
     ep = mod.PiiExtractPluginLoader()
-    assert str(ep) == '<PiiExtractPluginLoader: regex>'
+    assert str(ep) == f'<PiiExtractPluginLoader: regex {VERSION}>'
 
 
 def test20_tasklist():
