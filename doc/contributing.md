@@ -99,10 +99,10 @@ You can see some examples of unit tests:
 [task descriptor]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-descriptor.md
 [task implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md
 [PII regex guidelines]: https://github.com/piisa/pii-extract-base/tree/main/doc/regex.md
-[callable implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#callable-implementation
-[class implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#class-implementation
+[callable implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#2-callable-implementation
+[class implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#1-class-implementation
 
-[context validation]: https://github.com/piisa/pii-extract-base/doc/task-implementation.md#context-based-pii-validation
+[context validation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#context-based-pii-validation
 [checksum validation]: #checksum-validation
 
 [credit card]: ../src/pii_extract_plg_regex/modules/any/credit_card.py

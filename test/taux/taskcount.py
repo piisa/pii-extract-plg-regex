@@ -7,9 +7,9 @@ TASK_COUNT = {
         "any": 1,
         "au": 2,
         "ca": 1,
-        "gb": 1,
+        "gb": 2,
         "in": 1,
-        "us": 1
+        "us": 2
     },
     "es": {
         "any": 1,

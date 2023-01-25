@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Dict, Iterable
 
 from pii_extract.gather.collector import FolderTaskCollector
+from pii_extract.helper.logger import PiiLogger
+
 from . import VERSION, defs
 
 DESCRIPTION = "Regex-based PII tasks (plus context-based validation) for some languages and countries"
@@ -36,12 +38,14 @@ class PiiExtractPluginLoader:
 
     def __init__(self, config: Dict = None, debug: bool = False):
         self.cfg = config.get(defs.FMT_CONFIG, {}) if config else {}
+        self._log = PiiLogger(__name__, debug)
+        self._log(". load plg-regex: %s", VERSION)
         self.tasks = RegexTaskCollector(debug=debug,
                                         pii_filter=self.cfg.get("pii_filter"))
 
 
     def __repr__(self) -> str:
-        return '<PiiExtractPluginLoader: regex>'
+        return f'<PiiExtractPluginLoader: regex {VERSION}>'
 
 
     def get_plugin_tasks(self, lang: str = None) -> Iterable[Dict]:

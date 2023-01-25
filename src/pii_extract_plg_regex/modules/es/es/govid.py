@@ -19,7 +19,7 @@ _DNI_PATTERN = r"(?: \b | (?<= DNI) ) \d{6,8} -? [A-KJ-NP-TV-Z] \b"
 _NIE_PATTERN = r"(?: \b | (?<= NIE) ) [X-Z] \d{7} -? [A-KJ-NP-TV-Z] \b"
 
 
-class SpanishDniNie(BaseMultiPiiTask):
+class Spanish_DNI_NIE(BaseMultiPiiTask):
     """
     Spanish Government-issued identifiers: Documento Nacional de Identidad (DNI) & Número de Identificación de Extranjero (NIE)
     """
@@ -55,7 +55,7 @@ class SpanishDniNie(BaseMultiPiiTask):
 # Task descriptor
 PII_TASKS = {
     "class": "PiiTask",
-    "task": SpanishDniNie,
+    "task": Spanish_DNI_NIE,
     "name": "Spanish DNI and NIE numbers",
     "pii": {
         "type": PiiEnum.GOV_ID,
