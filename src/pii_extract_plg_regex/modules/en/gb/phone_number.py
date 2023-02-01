@@ -1,6 +1,5 @@
 """
 UK phone numbers
-
 """
 import re
 
