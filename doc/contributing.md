@@ -95,6 +95,27 @@ You can see some examples of unit tests:
    detected PII instances
    
 
+### Launching the tests
+
+The package needs a virtualenv with the dependencies installed; once it is
+available it can run the unit tests. The commands are:
+
+       make install-dependencies
+       make unit
+
+By default, the process
+  * uses python3.8 to create the virtualenv
+  * creates the virtualenv in `opt/venv/pii`
+
+It is possible to change those defaults by defining the environment variables
+`PYTHON` and `VENV`. For instance:
+
+       export PYTHON=python3.10
+       export VENV=/tmp/myvenv
+       make install-dependencies
+       make unit
+
+
 [PiiEnum]: https://github.com/piisa/pii-data/tree/main/src/pii_extract/types/piienum.py
 [task descriptor]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-descriptor.md
 [task implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md

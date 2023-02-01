@@ -26,32 +26,32 @@ jobs:
       uses: actions/checkout@v3
       with:
         path: pii-extract-plg-regex
-    - name: Checkout pii-data dependency
+    - name: "Checkout dependency from its repo: pii-data"
       uses: actions/checkout@main
       with:
         repository: piisa/pii-data
         path: pii-data
-    - name: Checkout pii-extract-base dependency
+    - name: "Checkout dependency from its repo: pii-extract-base"
       uses: actions/checkout@main
       with:
         repository: piisa/pii-extract-base
         path: pii-extract-base
-    - name: Create venv
+    - name: "Create venv"
       run: |
         cd pii-extract-plg-regex
         VENV="$GITHUB_WORKSPACE/venv" PYTHON="python${{matrix.python-version}}" make venv
-    - name: Install pii-data from local
+    - name: "Install pii-data from checked-out copy"
       run: |
         cd pii-data
-        VENV=$GITHUB_WORKSPACE/venv make install
-    - name: Install pii-extract-base from local
+        VENV="$GITHUB_WORKSPACE/venv" make install
+    - name: "Install pii-extract-base from checked-out copy"
       run: |
         cd pii-extract-base
-        VENV=$GITHUB_WORKSPACE/venv make install
-    - name: Install package dependencies
+        VENV="$GITHUB_WORKSPACE/venv" make install
+    - name: Install the rest of package dependencies
       run: |
         cd pii-extract-plg-regex
-        "$GITHUB_WORKSPACE/venv/bin/pip" install -r requirements.txt
+        VENV="$GITHUB_WORKSPACE/venv" make install-dependencies
     - name: Install main package
       run: |
         cd pii-extract-plg-regex
