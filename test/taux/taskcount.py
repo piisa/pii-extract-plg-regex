@@ -8,7 +8,7 @@ TASK_COUNT = {
         "au": 2,
         "ca": 1,
         "gb": 2,
-        "in": 1,
+        "in": 2,
         "us": 2
     },
     "es": {
