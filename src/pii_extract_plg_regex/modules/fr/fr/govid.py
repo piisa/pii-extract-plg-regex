@@ -1,5 +1,5 @@
 """
-French Goverment-issued IDs:
+French Government-issued IDs:
   - NIR (Numero d'Inscription au Repertoire national d'identification des
     personnes physiques) aka INSEE code
   - NIF (Numéro d'Immatriculation Fiscale or Numéro d'Identification Fiscale)

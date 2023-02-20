@@ -116,7 +116,7 @@ It is possible to change those defaults by defining the environment variables
        make unit
 
 
-[PiiEnum]: https://github.com/piisa/pii-data/tree/main/src/pii_extract/types/piienum.py
+[PiiEnum]: https://github.com/piisa/pii-data/tree/main/src/pii_data/types/piienum.py
 [task descriptor]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-descriptor.md
 [task implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md
 [PII regex guidelines]: https://github.com/piisa/pii-extract-base/tree/main/doc/regex.md
@@ -135,7 +135,7 @@ It is possible to change those defaults by defining the environment variables
 [test for bitcoin address]: ../test/unit/B_modules/any/test_bitcoin_address.py
 [test for emails]: ../test/unit/B_modules/any/test_email.py
 [test for credit card]: ../test/unit/B_modules/any/test_credit_card.py
-[taxcount]: ../test/taux/taxcount.py
+[taxcount]: ../test/taux/taskcount.py
 
 [modules]: ../src/pii_extract_plg_regex/modules
 

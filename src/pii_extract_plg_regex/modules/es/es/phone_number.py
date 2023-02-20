@@ -1,5 +1,5 @@
 """
-Spanish phone numbers, fixed and mobile
+ES phone numbers, fixed and mobile
 """
 
 import re
@@ -44,9 +44,9 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def spanish_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def ES_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Spanish Phone Numbers, mobile & landline
+    ES Phone Numbers, mobile & landline
     """
     # Compile regex if needed
     global _REGEX
@@ -67,10 +67,10 @@ def spanish_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": spanish_phone_number,
+    "task": ES_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "Spanish phone number",
+        "subtype": "ES phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",
