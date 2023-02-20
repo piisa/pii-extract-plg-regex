@@ -121,10 +121,10 @@ It is possible to change those defaults by defining the environment variables
 [task descriptor]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-descriptor.md
 [task implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md
 [PII regex guidelines]: https://github.com/piisa/pii-extract-base/tree/main/doc/regex.md
-[callable implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#2-callable-implementation
-[class implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#1-class-implementation
+[callable implementation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#2-callable-implementation
+[class implementation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#3-class-implementation
 
-[context validation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#context-based-pii-validation
+[context validation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#context-based-pii-validation
 #context-based-pii-validation
 [checksum validation]: #checksum-validation
 

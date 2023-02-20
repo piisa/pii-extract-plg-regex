@@ -1,8 +1,11 @@
-0.1.4
+0.2.0
  * added area code formats in international phone numbers for EN
  * added Indian phone numbers for EN
  * documentation fixes
 
+0.1.4
+ * added French PII (phone numbers, govid)
+ 
 0.1.3
  * fix Makefile for installation & unit tests
 
