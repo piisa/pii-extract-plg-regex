@@ -1,8 +1,8 @@
 # Pii Extractor plugin: regex
 
-[![version](https://img.shields.io/pypi/v/pii-extract-plg-regex.svg)](https://pypi.org/project/pii-extract-plg-regex)
-[![changelog](https://img.shields.io/badge/change-log-blue)](https://github.com/piisa/pii-extract-plg-regex/blob/master/LICENSE)
-[![license](https://img.shields.io/pypi/l/aiomultiprocess.svg)](https://github.com/piisa/pii-extract-plg-regex/blob/master/LICENSE)
+[![version](https://img.shields.io/pypi/v/pii-extract-plg-regex)](https://pypi.org/project/pii-extract-plg-regex)
+[![changelog](https://img.shields.io/badge/change-log-blue)](CHANGES.md)
+[![license](https://img.shields.io/pypi/l/pii-extract-plg-regex)](LICENSE)
 [![build status](https://github.com/piisa/pii-extract-plg-regex/actions/workflows/pii-extract-plg-regex-pr.yml/badge.svg)](https://github.com/piisa/pii-extract-plg-regex/actions)
 
 This repository builds a Python package that installs a [pii-extract-base]
