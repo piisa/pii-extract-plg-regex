@@ -15,6 +15,11 @@ TESTCASES = [
      "phone number: <PHONE_NUMBER:+34983453999>"),
     ("ph. +34983453999",
      "ph. <PHONE_NUMBER:+34983453999>"),
+    # Area code
+    ("phone number: +91 (22) 6666 2134",
+     "phone number: <PHONE_NUMBER:+91 (22) 6666 2134>"),
+    ("phone number: +44 (20) 3451-8767",
+     "phone number: <PHONE_NUMBER:+44 (20) 3451-8767>"),
     # An invalid country code
     ("phone number: +99 983 453 999", "phone number: +99 983 453 999"),
     # No valid contexts

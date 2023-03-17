@@ -20,7 +20,7 @@ repository with the following changes:
 	  task descriptor). The list variable *must* be named `PII_TASKS`
  5. Then, add a unit test to check the validity for the task code, in the
     proper place under [test/unit/B_modules]. 
- 6. Finally, update the [taxcount] dictionary used in unit tests to verify the
+ 6. Finally, update the [taskcount] dictionary used in unit tests to verify the
     total number of tasks available. Depending on the task type, it might
 	be needed to update other unit tests.
 
@@ -54,7 +54,8 @@ adding to the `find()` method (you can check the [credit card] task as an
 example).
 
 A simpler possibility is to use the capacities provided by the [python-stdnum]
-Python package (see below in [#auxiliary-libraries]). For this the [callable implementation] is often adequate, because it can be
+Python package (see below in [auxiliary-libraries](#auxiliary-libraries)). For
+this the [callable implementation] is often adequate, because it can be
 used to perform these additional operations on regex matches easily. Two
 examples of such implementations are:
  
@@ -120,10 +121,11 @@ It is possible to change those defaults by defining the environment variables
 [task descriptor]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-descriptor.md
 [task implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md
 [PII regex guidelines]: https://github.com/piisa/pii-extract-base/tree/main/doc/regex.md
-[callable implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#2-callable-implementation
-[class implementation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#1-class-implementation
+[callable implementation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#2-callable-implementation
+[class implementation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#3-class-implementation
 
-[context validation]: https://github.com/piisa/pii-extract-base/tree/main/doc/task-implementation.md#context-based-pii-validation
+[context validation]: https://github.com/piisa/pii-extract-base/blob/main/doc/task-implementation.md#context-based-pii-validation
+#context-based-pii-validation
 [checksum validation]: #checksum-validation
 
 [credit card]: ../src/pii_extract_plg_regex/modules/any/credit_card.py
@@ -135,7 +137,7 @@ It is possible to change those defaults by defining the environment variables
 [test for bitcoin address]: ../test/unit/B_modules/any/test_bitcoin_address.py
 [test for emails]: ../test/unit/B_modules/any/test_email.py
 [test for credit card]: ../test/unit/B_modules/any/test_credit_card.py
-[taxcount]: ../test/taux/taskcount.py
+[taskcount]: ../test/taux/taskcount.py
 
 [modules]: ../src/pii_extract_plg_regex/modules
 

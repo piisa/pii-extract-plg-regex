@@ -1,5 +1,10 @@
 # Pii Extractor plugin: regex
 
+[![version](https://img.shields.io/pypi/v/pii-extract-plg-regex)](https://pypi.org/project/pii-extract-plg-regex)
+[![changelog](https://img.shields.io/badge/change-log-blue)](CHANGES.md)
+[![license](https://img.shields.io/pypi/l/pii-extract-plg-regex)](LICENSE)
+[![build status](https://github.com/piisa/pii-extract-plg-regex/actions/workflows/pii-extract-plg-regex-pr.yml/badge.svg)](https://github.com/piisa/pii-extract-plg-regex/actions)
+
 This repository builds a Python package that installs a [pii-extract-base]
 plugin to performs PII detection for text data based on regular expressions
 (with optional context).
