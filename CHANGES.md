@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1
+ * fixed source name for the detectors
+
 ## 0.2.0
  * added area code formats in international phone numbers for EN
  * added Indian phone numbers for EN
