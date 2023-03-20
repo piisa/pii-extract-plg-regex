@@ -11,8 +11,6 @@ from pii_extract.helper.logger import PiiLogger
 
 from . import VERSION, defs
 
-DESCRIPTION = "Regex-based PII tasks (plus context-based validation) for some languages and countries"
-
 
 # Define the folder holding the detection modules
 _MODPATH = Path(__file__).parent / "modules"
@@ -24,17 +22,17 @@ class RegexTaskCollector(FolderTaskCollector):
     """
     def __init__(self, debug: bool = False, **kwargs):
         super().__init__("pii_extract_plg_regex.modules", _MODPATH,
-                         "piisa:pii_extract_plg_regex",
-                         version=VERSION, debug=debug, **kwargs)
+                         defs.TASK_SOURCE, version=VERSION, debug=debug,
+                         **kwargs)
 
 
 class PiiExtractPluginLoader:
     """
     The class acting as entry point for the package (the plugin loader)
     """
-    source = "piisa:pii-extract-plg-regex"
+    source = defs.TASK_SOURCE
     version = VERSION
-    description = DESCRIPTION
+    description = defs.TASK_DESCRIPTION
 
     def __init__(self, config: Dict = None, debug: bool = False):
         self.cfg = config.get(defs.FMT_CONFIG, {}) if config else {}
