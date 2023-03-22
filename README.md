@@ -7,7 +7,8 @@
 
 This repository builds a Python package that installs a [pii-extract-base]
 plugin to performs PII detection for text data based on regular expressions
-(with optional context).
+(with optional context). The name of the plugin entry point is 
+`piisa-detectors-regex`.
 
 The PII Tasks in the package are [structured by language & country], since many
 of the PII elements are language- and/or -country dependent.

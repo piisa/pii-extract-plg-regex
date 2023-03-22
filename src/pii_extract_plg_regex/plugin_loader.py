@@ -39,7 +39,7 @@ class PiiExtractPluginLoader:
         self._log = PiiLogger(__name__, debug)
         self._log(". load plg-regex: %s", VERSION)
         self.tasks = RegexTaskCollector(debug=debug,
-                                        pii_filter=self.cfg.get("pii_filter"))
+                                        pii_filter=self.cfg.get("pii_list"))
 
 
     def __repr__(self) -> str:

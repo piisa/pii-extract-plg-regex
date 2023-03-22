@@ -1,12 +1,18 @@
 # Changelog
 
+## 0.3.0
+ * config field `pii_filter` changed to `pii_list` for consistency with
+   other plugins
+ * added AGE detector for EN
+ * added zipcode detector for EN-US
+
 ## 0.2.1
  * fixed source name for the detectors
 
 ## 0.2.0
  * added area code formats in international phone numbers for EN
- * added Indian phone numbers for EN
- * added Canadian phone numbers for EN
+ * added Indian phone numbers for EN-IN
+ * added Canadian phone numbers for EN-CA
  * documentation fixes
 
 ## 0.1.4
@@ -17,11 +23,11 @@
 
 ## 0.1.2
  * improvements in debug output
- * added phone number for UK
+ * added phone number for EN-UK
  
 ## 0.1.1
  * fix usage of libphonenumber -- always use a front-end regex
- * added phone number for USA
+ * added phone number for EN-US
 
 ## 0.1.0
  * split from the old `pii-manager`, as a pii-extract plugin
