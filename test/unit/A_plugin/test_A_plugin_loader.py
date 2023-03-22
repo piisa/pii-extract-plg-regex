@@ -32,7 +32,7 @@ def test30_tasklist_filter():
     # Fetch only GOV_ID & CREDIT_CARD tasks
     config = {
         defs.FMT_CONFIG: {
-            "pii_filter": [PiiEnum.GOV_ID, PiiEnum.CREDIT_CARD]
+            "pii_list": [PiiEnum.GOV_ID, PiiEnum.CREDIT_CARD]
         }
     }
     ep = mod.PiiExtractPluginLoader(config=config)
