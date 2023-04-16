@@ -8,7 +8,7 @@ from pii_data.types import PiiEnum
 _AGE_REGEX = r"""
    \b
    (?:
-     (?: (1?\d{1,2}) \s+ years \s+ old ) |
+     (?: (1?\d{1,2}) [-\s] years? [-\s] old ) |
      (?: age (?: \s+ is | \s* : )? \s+ (1?\d{1,2}) )
    )
    \b

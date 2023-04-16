@@ -1,5 +1,5 @@
 """
-Argentinian phone numbers, using only libphonenumbers
+Argentinian phone numbers, using libphonenumbers
 """
 
 import re
@@ -15,13 +15,13 @@ from pii_data.types import PiiEnum
 # https://es.wikipedia.org/wiki/N%C3%BAmeros_telef%C3%B3nicos_en_Argentina
 PHONE_REGEX = r"""
   \b
-  (?: 9\s )?
+  (?: 9[ \xa0] )?
   (?:
-     11 \s? (?: 15 \s? )? \d{4} [-\s]? \d{4}            # 2-digit area code
+     11 [ \xa0]? (?: 15 [ \xa0]? )? \d{4} [-\s]? \d{4}            # 2-digit area code
      |
-     [23]\d{2} \s? (?: 15 \s? )? \d{3} [-\s]? \d{4}     # 3-digit area code
+     [23]\d{2} [ \xa0]? (?: 15 [ \xa0]? )? \d{3} [-\s]? \d{4}     # 3-digit area code
      |
-     [23]\d{3} \s? (?: 15 \s? )? \d{2} [-\s]? \d{4}     # 4-digit area code
+     [23]\d{3} [ \xa0]? (?: 15 [ \xa0]? )? \d{2} [-\s]? \d{4}     # 4-digit area code
   )
   \b
 """
@@ -44,9 +44,9 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def Argentinian_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def AR_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Argentinian Phone Numbers
+    Argentinian phone number
     """
     # Compile regex if needed
     global _REGEX
@@ -56,7 +56,10 @@ def Argentinian_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     # Find all instances
     for match in _REGEX.finditer(text):
         item_value = match.group()
-        ph = phonenumbers.parse(item_value, "AR")
+        try:
+            ph = phonenumbers.parse(item_value, "AR")
+        except phonenumbers.NumberParseException:
+            continue
         if phonenumbers.is_valid_number_for_region(ph, "AR"):
             yield item_value, match.start()
 
@@ -65,10 +68,9 @@ def Argentinian_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": Argentinian_phone_number,
+    "task": AR_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "Argentinian phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

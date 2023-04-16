@@ -20,9 +20,9 @@ _CURP_PATTERN = r"\b [A-Z] [AEIOU] [A-Z]{2} \d{6} [HM] [A-Z]{5} [0-9A-Z] \d \b"
 # compiled regex
 _REGEX = None
 
-def Mexican_CURP(text: str) -> Iterable[Tuple[str, int]]:
+def MX_CURP(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Mexican Clave Única de Registro de Población
+    Mexican Clave Única de Registro de Población (CURP)
     """
     # Compile regex if needed
     global _REGEX
@@ -40,10 +40,10 @@ def Mexican_CURP(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": Mexican_CURP,
+    "task": MX_CURP,
     "pii": {
         "type": PiiEnum.GOV_ID,
-        "subtype": "Mexican CURP",
+        "subtype": "CURP",
         "method": "strong-regex,checksum"
     }
 }

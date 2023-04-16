@@ -9,11 +9,11 @@ from taux.taskproc import check_tasks
 TESTCASES = [
     # Valid zip code
     (
-        "Zipcode CA 32456", "Zipcode <STREET_ADDRESS:CA 32456>"
+        "Zipcode CA 32456", "Zipcode <LOCATION:CA 32456>"
     ),
     (
         "the address is in NY 45123",
-        "the address is in <STREET_ADDRESS:NY 45123>",
+        "the address is in <LOCATION:NY 45123>",
     ),
     # Invalid zip codes
     (

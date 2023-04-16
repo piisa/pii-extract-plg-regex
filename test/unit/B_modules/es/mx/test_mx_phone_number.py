@@ -1,5 +1,5 @@
 """
-Test Argentinian phone numbers
+Test Mexican phone numbers
 """
 
 from pii_extract_plg_regex.modules.es.mx.phone_number import PII_TASKS

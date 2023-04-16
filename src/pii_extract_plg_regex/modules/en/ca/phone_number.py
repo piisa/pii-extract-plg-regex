@@ -12,11 +12,11 @@ from pii_data.types import PiiEnum
 # Regex for phone numbers
 PHONE_REGEX = r"""
    (?<! \w )
-   (?: 1[- ] )?                         # country code
+   (?: 1[- \xa0] )?                     # country code
    (?: \( \d{3} \) | \d{3} )            # area code
-   [- /]?
+   [- \xa0/]?
    \d{3}                                # central office code/exchange code
-   [- ]?
+   [- \xa0]?
    \d{4}                                # station code
    (?! [-\w] )
 """
@@ -27,7 +27,8 @@ CONTEXT_REGEX = r"""
  (?:
    (?: tele )? phone s? |
    mobile s? |
-   call
+   call |
+   tel | cell | mob | ph\.
  )
  \b
 """
@@ -50,7 +51,10 @@ def CA_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     # Find all instances
     for match in _REGEX.finditer(text):
         item_value = match.group()
-        ph = phonenumbers.parse(item_value, "CA")
+        try:
+            ph = phonenumbers.parse(item_value, "CA")
+        except phonenumbers.NumberParseException:
+            continue
         if phonenumbers.is_valid_number_for_region(ph, "CA"):
             yield item_value, match.start()
 
@@ -62,7 +66,6 @@ PII_TASKS = {
     "task": CA_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "Canadian phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

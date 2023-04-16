@@ -106,8 +106,8 @@ PII_TASKS = {
     "class": "callable",
     "task": US_zipcode,
     "pii": {
-        "type": PiiEnum.STREET_ADDRESS,
-        "subtype": "US zipcode",
+        "type": PiiEnum.LOCATION,
+        "subtype": "zipcode",
         "method": "soft-regex"
     }
 }

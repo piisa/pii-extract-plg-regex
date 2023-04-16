@@ -17,9 +17,9 @@ from pii_data.types import PiiEnum
 PHONE_REGEX = r"""
   (?<![\w\+])
   (?:
-     \d{3} \s? \d{3} \s? \d{3}
+     \d{3} [ \xa0]? \d{3} [ \xa0]? \d{3}
      |
-     (?: \d{3} \s? \d{2} | \d{2} \s? \d{3}) \s? \d{2} \s? \d{2}
+     (?: \d{3} [ \xa0]? \d{2} | \d{2} [ \xa0]? \d{3}) [ \xa0]? \d{2} [ \xa0]? \d{2}
      |
      016
   )
@@ -46,7 +46,7 @@ _REGEX = None
 
 def ES_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    ES Phone Numbers, mobile & landline
+    Spanish phone numbers, mobile & landline
     """
     # Compile regex if needed
     global _REGEX
@@ -58,7 +58,10 @@ def ES_phone_number(text: str) -> Iterable[Tuple[str, int]]:
         if item_value == "016":
             yield item_value, match.start()
         else:
-            ph = phonenumbers.parse(item_value, "ES")
+            try:
+                ph = phonenumbers.parse(item_value, "ES")
+            except phonenumbers.NumberParseException:
+                continue
             if phonenumbers.is_valid_number(ph):
                 yield item_value, match.start()
 
@@ -70,7 +73,6 @@ PII_TASKS = {
     "task": ES_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "ES phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

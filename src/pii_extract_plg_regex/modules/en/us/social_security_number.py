@@ -24,5 +24,5 @@ _SSN_PATTERN = r"""
 
 
 PII_TASKS = [
-    (PiiEnum.GOV_ID, _SSN_PATTERN, "U.S. Social Security Number")
+    (PiiEnum.GOV_ID, _SSN_PATTERN, "Social Security Number")
 ]

@@ -11,8 +11,8 @@ from unittest.mock import Mock
 from pii_data.types.piicollection import collection
 from pii_data.types.doc import document
 
-from pii_extract.gather.collector.defs import PII_EXTRACT_PLUGIN_ID
-import pii_extract.gather.collector.plugin as plugin_mod
+from pii_extract.gather.collection.sources.defs import PII_EXTRACT_PLUGIN_ID
+import pii_extract.gather.collection.sources.plugin as plugin_mod
 
 from pii_extract_plg_regex.plugin_loader import PiiExtractPluginLoader
 

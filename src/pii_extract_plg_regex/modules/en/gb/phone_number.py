@@ -13,13 +13,13 @@ from pii_data.types import PiiEnum
 PHONE_REGEX = r"""
    (?<! [\(\w] )
    (?:
-      07\d{3} \s? \d{3} \s? \d{3} |                       # mobile
-      (?P<p1>\()? 0\d{2} (?(p1)\)) \s? \d{4} \s? \d{4} |  # 3-digit area code
-      (?P<p2>\()? 0\d{3} (?(p2)\)) \s? \d{3} \s? \d{4} |  # 4-digit area code
-      (?P<p3>\()? 0\d{4} (?(p3)\)) \s? \d{2} \s? \d{4} |  # 5-digit area code
-      (?P<p4>\()? 0\d{3} \s? \d{2} (?(p4)\)) \s?          # 6-digit area code
+      07\d{3} [ \xa0]? \d{3} [ \xa0]? \d{3} |                       # mobile
+      (?P<p1>\()? 0\d{2} (?(p1)\)) [ \xa0]? \d{4} [ \xa0]? \d{4} |  # 3-digit area code
+      (?P<p2>\()? 0\d{3} (?(p2)\)) [ \xa0]? \d{3} [ \xa0]? \d{4} |  # 4-digit area code
+      (?P<p3>\()? 0\d{4} (?(p3)\)) [ \xa0]? \d{2} [ \xa0]? \d{4} |  # 5-digit area code
+      (?P<p4>\()? 0\d{3} [ \xa0]? \d{2} (?(p4)\)) [ \xa0]?          # 6-digit area code
          (?:
-            \d{2} \s? \d{3} | \d{4}
+            \d{2} [ \xa0]? \d{3} | \d{4}
          )
    )
    (?! [-\w] )
@@ -32,7 +32,8 @@ CONTEXT_REGEX = r"""
  (?:
    (?: tele )? phone s? |
    mobile s? |
-   call
+   call |
+   tel | cell | mob | ph\.
  )
  \b
 """
@@ -55,7 +56,10 @@ def UK_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     # Find all instances
     for match in _REGEX.finditer(text):
         item_value = match.group()
-        ph = phonenumbers.parse(item_value, "GB")
+        try:
+            ph = phonenumbers.parse(item_value, "GB")
+        except phonenumbers.NumberParseException:
+            continue
         if phonenumbers.is_valid_number_for_region(ph, "GB"):
             yield item_value, match.start()
 
@@ -67,7 +71,6 @@ PII_TASKS = {
     "task": UK_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "UK phone number",
         "method": "soft-regex,context",
         "context": {
             "type": "regex",

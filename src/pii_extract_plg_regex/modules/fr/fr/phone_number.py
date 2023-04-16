@@ -13,8 +13,8 @@ from pii_data.types import PiiEnum
 # Regex for mobile & landline phone numbers
 PHONE_REGEX = r"""
     \b
-    0\s*[1-9]             # 0 + Area code (1-9)
-    (?:[\s.-]*\d{2}){4}   # Remaining 8 numbers (all together or by pairs)
+    0 [ \xa0]? [1-9]           # 0 + Area code (1-9)
+    (?:[ \xa0.-]*\d{2}){4}     # Remaining 8 numbers (all together or by pairs)
     \b
 """
 

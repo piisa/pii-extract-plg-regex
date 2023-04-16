@@ -20,8 +20,7 @@ _DNI_PATTERN_FULL = r"\b \d{8} - \d \b"
 
 class PeruvianDniFull(BasePiiTask):
     """
-    Match a Peru DNI number, and validate the checksum digit, if present, else
-    use context.
+    Peru DNI number with checksum, validating the checksum digit
     """
 
     def __init__(self, **kwargs):
@@ -49,20 +48,21 @@ PII_TASKS = [
     {
         "class": "PiiTask",
         "task": PeruvianDniFull,
-        "name": "Peruvian DNI",
+        "name": "Peruvian DNI (checksum)",
         "pii": {
             "type": PiiEnum.GOV_ID,
-            "subtype": "Peruvian DNI",
+            "subtype": "DNI",
             "method": "soft-regex,checksum"
         }
     },
     {
         "class": "regex",
         "task": _DNI_PATTERN_SIMPLE,
-        "name": "Peruvian DNI, using context",
+        "name": "Peruvian DNI (context)",
+        "doc": "Peru DNI number, using context",
         "pii": {
             "type": PiiEnum.GOV_ID,
-            "subtype": "Peruvian DNI",
+            "subtype": "DNI",
             "context": {
                 "value": ["DNI", "documento nacional de identidad"],
                 "width": [45, 0],

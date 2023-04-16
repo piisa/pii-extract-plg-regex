@@ -15,7 +15,12 @@ from pii_data.types import PiiEnum
 # ----------------------------------------------------------------------------
 
 # regex for a Código Cuenta Cliente, with optional spaces separating the pieces
-_CCC_PATTERN = r"\d{4}\s?\d{4}\s?\d{2}\s?\d{10}"
+_CCC_PATTERN = r"""
+  (?<![\w.,])
+  \d{4} [ \xa0]? \d{4} [ \xa0]? \d{2} [ \xa0]? \d{10}
+  (?! \w | [.,] \d)
+"""
+
 
 # compiled regex
 _REGEX = None
@@ -44,7 +49,7 @@ PII_TASKS = {
     "task": spanish_bank_ccc,
     "pii": {
         "type": PiiEnum.BANK_ACCOUNT,
-        "subtype": "Spanish Bank CCC",
+        "subtype": "ES Bank CCC",
         "method": "soft-regex,checksum"
     }
 }
