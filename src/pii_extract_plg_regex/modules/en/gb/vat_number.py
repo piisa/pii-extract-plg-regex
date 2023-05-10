@@ -18,6 +18,19 @@ _VAT_PATTERN = r"""
   GB(?:GD|HA)\d{3}"""
 
 
-PII_TASKS = [
-    (PiiEnum.GOV_ID, _VAT_PATTERN, "UK VAT number")
-]
+PII_TASKS = {
+    "class": "regex",
+    "task": _VAT_PATTERN,
+    "name": "UK VAT number",
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "UK VAT number",
+        "method": "weak-regex,context",
+        "context": {
+            "type": "word",
+            "value": ["vat"],
+            "width": [32, 32]
+        }
+
+    }
+}

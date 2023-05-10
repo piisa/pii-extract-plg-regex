@@ -1,5 +1,5 @@
 """
-Argentinian phone numbers, using only libphonenumbers
+Asutralian phone numbers
 """
 import re
 
@@ -11,25 +11,25 @@ from pii_data.types import PiiEnum
 
 # Regex for phone numbers
 PHONE_REGEX = r"""
-  (?<![\w\+])
-  (?:
-     \d{2} [ \xa0]? \d{4} [ \xa0]? \d{4}
-     |
-     \d{3} [ \xa0]? \d{3} [ \xa0]? \d{4}
-  )
-  \b
+   (?<! \w )
+   (?:
+      (?: \( 0[2378] \) | 0[2378] ) [ \xa0]?  \d{4}  [ \xa0]?  \d{4}  # landline
+      |
+      0[45]\d{2}  [ \xa0]?  \d{3}  [ \xa0]?  \d{3}                    # mobile
+   )
+   (?! [-\w] )
 """
 
 # Context that must be found around the phone number
 CONTEXT_REGEX = r"""
  \b
  (?:
-   tel[ée]fonos? |
-   (?: tf | tel | tel[éf] | tfno ) \. |        # abbreviations
-   celular (?: es )? |                         # mobile
-   ll[aá]m[aeoáéó][bdilmrs]?\w*                # conjugation for "llamar"
+   (?: tele )? phone s? |
+   mobile s? |
+   call |
+   tel | cell | mob | ph\.
  )
- (?! \w )
+ \b
 """
 
 # ----------------------------------------------------------------------------
@@ -38,9 +38,9 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def MX_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def AU_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Mexican phone number
+    AU Phone Numbers
     """
     # Compile regex if needed
     global _REGEX
@@ -51,18 +51,18 @@ def MX_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     for match in _REGEX.finditer(text):
         item_value = match.group()
         try:
-            ph = phonenumbers.parse(item_value, "MX")
+            ph = phonenumbers.parse(item_value, "AU")
         except phonenumbers.NumberParseException:
             continue
-        if phonenumbers.is_valid_number_for_region(ph, "MX"):
+        if phonenumbers.is_valid_number_for_region(ph, "AU"):
             yield item_value, match.start()
-
 
 # ---------------------------------------------------------------------
 
+
 PII_TASKS = {
     "class": "callable",
-    "task": MX_phone_number,
+    "task": AU_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
         "method": "soft-regex,context",

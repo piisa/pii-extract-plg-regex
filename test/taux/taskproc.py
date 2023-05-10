@@ -10,8 +10,9 @@ from typing import Dict, List, Tuple, Iterable
 from pii_data.types import PiiEntity
 from pii_data.types.doc import DocumentChunk
 from pii_extract.build.task import BasePiiTask
-from pii_extract.gather.parser import parse_task_descriptor, RawTaskDefaults
+from pii_extract.gather.parser import parse_task_descriptor
 from pii_extract.gather.parser.defs import TYPE_TASKD
+from pii_extract.gather.collection.sources.utils import RawTaskDefaults
 from pii_extract.build.build import build_task
 
 
@@ -42,17 +43,19 @@ def pii_detect(chunk: DocumentChunk,
 def pii_replace(pii_list: Iterable[PiiEntity], chunk: DocumentChunk):
     """
     Replace the PII values in a document chunk by an annotated version
-           <PII-TYPE:VALUE>
+    <PII-TYPE:VALUE>
     """
-    output = []
-    pos = 0
     doc = chunk.data
+    pos = 0
+    output = []
+
+    # Compose all substitutions
     for pii in sorted(pii_list, key=attrgetter('pos')):
-        # Add all a pair (text-prefix, transformed-pii)
         f = pii.fields
         output += [doc[pos:pii.pos], f'<{f["type"]}:{f["value"]}>']
         pos = pii.pos + len(pii)
-    # Reconstruct the document (including the last suffix)
+
+    # Reconstruct the fulldocument (including the last suffix)
     doc = "".join(output) + doc[pos:]
     return DocumentChunk(chunk.id, doc, chunk.context)
 

@@ -60,7 +60,7 @@ PII_TASKS = {
     "task": Argentinian_CUIL,
     "pii": {
         "type": PiiEnum.GOV_ID,
-        "subtype": "Argentinian CUIL",
+        "subtype": "CUIL",
         "method": "soft-regex,checksum"
     }
 }

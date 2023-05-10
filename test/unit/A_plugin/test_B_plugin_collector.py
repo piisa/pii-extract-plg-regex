@@ -6,7 +6,7 @@ from itertools import chain
 
 import pytest
 
-from pii_extract.build.collection import get_task_collection
+from pii_extract.gather.collection import get_task_collection
 
 from taux.auxpatch import patch_entry_points
 from taux.taskcount import TASK_COUNT

@@ -21,7 +21,7 @@ TESTCASES = [
         "El DNI es 12345678.",
         "El DNI es <GOV_ID:12345678>.",
         PiiEntity.build(PiiEnum.GOV_ID, "12345678", "1", 10, lang="es",
-                        country="pe", subtype="Peruvian DNI", detector=1,
+                        country="pe", subtype="DNI", detector=1,
                         docid="abcde-11111", process={"stage": "detection"})
     ),
     # Invalid full DNI (checksum fails)
@@ -35,7 +35,7 @@ TESTCASES = [
         "La identificación es 10117410-2.",
         "La identificación es <GOV_ID:10117410-2>.",
         PiiEntity.build(PiiEnum.GOV_ID, "10117410-2", "3", 21, lang="es",
-                        country="pe", subtype="Peruvian DNI", detector=2,
+                        country="pe", subtype="DNI", detector=2,
                         docid="abcde-11111", process={"stage": "detection"})
     ),
     # Invalid simple DNI (too long)

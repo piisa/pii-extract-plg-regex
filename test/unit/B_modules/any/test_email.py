@@ -44,7 +44,13 @@ TESTCASES = [
     (
         """<p><i class="fa fa-envelope-o"></i> <a href="mailto:okidoki@gmail.com">""",
         """<p><i class="fa fa-envelope-o"></i> <a href="mailto:<EMAIL_ADDRESS:okidoki@gmail.com>">"""
-    )
+    ),
+    # Invalid emails
+    (
+        "email जॉन@माइक्रोसॉफ्टहै.कॉम2. email जॉन@माइक्रोसॉफ्टहै.क",
+        "email जॉन@माइक्रोसॉफ्टहै.कॉम2. email जॉन@माइक्रोसॉफ्टहै.क"
+    ),
+
 ]
 
 

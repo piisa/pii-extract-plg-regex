@@ -56,10 +56,10 @@ class Spanish_DNI_NIE(BaseMultiPiiTask):
 PII_TASKS = {
     "class": "PiiTask",
     "task": Spanish_DNI_NIE,
-    "name": "Spanish DNI and NIE numbers",
+    "name": "ES DNI and NIE",
     "pii": {
         "type": PiiEnum.GOV_ID,
-        "subtype": ["Spanish DNI", "Spanish NIE"],
+        "subtype": ["DNI", "NIE"],
         "method": "regex,checksum"
     }
 }

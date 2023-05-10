@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0
+ * added AU phone number detector
+ * added PE phone number detector
+ * fixed phone numbers
+    - spaces in phone numbers
+    - control parse errors in phonenumbers
+	- improve context detection
+ * improved EN age detector
+ * added context to UK VAT number
+ * improved email regex
+ * improved names & subtypes in GOV_ID detectors
+ * adjusted for pii-extract-base 0.4.0
+
 ## 0.3.0
  * config field `pii_filter` changed to `pii_list` for consistency with
    other plugins

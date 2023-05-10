@@ -20,7 +20,7 @@ TESTCASES = [
         "Mi DNI es 34657934-Q.",
         "Mi DNI es <GOV_ID:34657934-Q>.",
         PiiEntity.build(PiiEnum.GOV_ID, "34657934-Q", "1", 10, lang="es",
-                        country="es", subtype="Spanish DNI", detector=1,
+                        country="es", subtype="DNI", detector=1,
                         docid="abcde-11111", process={"stage": "detection"})
     ),
     # A DNI without dash
@@ -28,7 +28,7 @@ TESTCASES = [
         "El DNI 34657934Q es válido",
         "El DNI <GOV_ID:34657934Q> es válido",
         PiiEntity.build(PiiEnum.GOV_ID, "34657934Q", "2", 7, lang="es",
-                        country="es", subtype="Spanish DNI", detector=1,
+                        country="es", subtype="DNI", detector=1,
                         docid="abcde-11111", process={"stage": "detection"})
     ),
     # A valid NIE
@@ -36,7 +36,7 @@ TESTCASES = [
         "El NIE es X3465793-S",
         "El NIE es <GOV_ID:X3465793-S>",
         PiiEntity.build(PiiEnum.GOV_ID, "X3465793-S", "3", 10, lang="es",
-                        country="es", subtype="Spanish NIE", detector=1,
+                        country="es", subtype="NIE", detector=1,
                         docid="abcde-11111", process={"stage": "detection"})
     ),
     # An invalid DNI
@@ -48,7 +48,7 @@ TESTCASES = [
         "Identificación DNI34657934-Q",
         "Identificación DNI<GOV_ID:34657934-Q>",
         PiiEntity.build(PiiEnum.GOV_ID, "34657934-Q", "6", 18, lang="es",
-                        country="es", subtype="Spanish DNI", detector=1,
+                        country="es", subtype="DNI", detector=1,
                         docid="abcde-11111", process={"stage": "detection"})
     )
 ]

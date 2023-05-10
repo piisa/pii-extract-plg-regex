@@ -6,7 +6,7 @@ from pathlib import Path
 
 from typing import Dict, Iterable
 
-from pii_extract.gather.collector import FolderTaskCollector
+from pii_extract.gather.collection.sources import FolderTaskCollector
 from pii_extract.helper.logger import PiiLogger
 
 from . import VERSION, defs

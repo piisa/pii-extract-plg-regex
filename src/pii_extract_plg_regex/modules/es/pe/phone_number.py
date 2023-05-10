@@ -1,6 +1,7 @@
 """
-Argentinian phone numbers, using only libphonenumbers
+Peruvian phone numbers, using libphonenumbers
 """
+
 import re
 
 from typing import Iterable, Tuple
@@ -9,13 +10,17 @@ import phonenumbers
 
 from pii_data.types import PiiEnum
 
+
 # Regex for phone numbers
+# https://en.wikipedia.org/wiki/Telephone_numbers_in_Peru
 PHONE_REGEX = r"""
-  (?<![\w\+])
+  \b
   (?:
-     \d{2} [ \xa0]? \d{4} [ \xa0]? \d{4}
-     |
-     \d{3} [ \xa0]? \d{3} [ \xa0]? \d{4}
+    (?: 9\d{2} [ \xa0]? \d{3} [ \xa0]? \d{3} )            # mobile
+    |
+    (?: 1 [ \xa0]? \d{3} [ \xa0]? \d{2} [ \xa0]? \d{2} )  # fixed (Lima, Callao)
+    |
+    (?: [4-8][1-7] [ \xa0]? \d{2} [ \xa0]? \d{2} [ \xa0]? \d{2} ) # fixed (rest)
   )
   \b
 """
@@ -38,9 +43,9 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def MX_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def PE_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Mexican phone number
+    Peruvian phone number
     """
     # Compile regex if needed
     global _REGEX
@@ -51,10 +56,10 @@ def MX_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     for match in _REGEX.finditer(text):
         item_value = match.group()
         try:
-            ph = phonenumbers.parse(item_value, "MX")
+            ph = phonenumbers.parse(item_value, "PE")
         except phonenumbers.NumberParseException:
             continue
-        if phonenumbers.is_valid_number_for_region(ph, "MX"):
+        if phonenumbers.is_valid_number_for_region(ph, "PE"):
             yield item_value, match.start()
 
 
@@ -62,7 +67,7 @@ def MX_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": MX_phone_number,
+    "task": PE_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
         "method": "soft-regex,context",

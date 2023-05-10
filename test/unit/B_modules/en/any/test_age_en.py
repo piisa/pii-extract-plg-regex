@@ -14,7 +14,10 @@ TESTCASES = [
     ("I'm 27 years old",
      "I'm <AGE:27> years old"),
     ("Your age is 65.",
-     "Your age is <AGE:65>.")
+     "Your age is <AGE:65>."),
+    ("A 1-year-old child",
+     "A <AGE:1>-year-old child"),
+    
 ]
 
 
