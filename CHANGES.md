@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+ * plugin_loader accepts the "languages" argument
+
 ## 0.4.0
  * added AU phone number detector
  * added PE phone number detector

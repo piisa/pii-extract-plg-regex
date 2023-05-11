@@ -59,7 +59,6 @@ PII_TASKS = {
     "task": FR_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "subtype": "FR phone number",
         "method": "soft-regex,context",
         "context": {"type": "regex", "value": CONTEXT_REGEX, "width": [64, 64]},
     },

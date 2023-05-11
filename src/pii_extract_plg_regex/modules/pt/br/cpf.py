@@ -19,7 +19,7 @@ _CPF_REGEX = re.compile(r"\b \d{3} \. \d{3} \. \d{3} - \d{2} \b", flags=re.X)
 
 def cadastro_pessoa_fisica(doc: str) -> Iterable[str]:
     """
-    Brazilian número de inscrição no Cadastro de Pessoas Físicas (detect and validate)
+    Brazilian número de inscrição no Cadastro de Pessoas Físicas
     """
     for candidate in _CPF_REGEX.findall(doc):
         if cpf.is_valid(candidate):

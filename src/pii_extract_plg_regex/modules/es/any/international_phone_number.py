@@ -10,6 +10,19 @@ from pii_data.types import PiiEnum
 from ...en.any.international_phone_number import PATTERN_INT_PHONE
 
 
+# Context that must be found around the phone number
+CONTEXT_REGEX = r"""
+ \b
+ (?:
+   tel[ée]fonos? |
+   (?: tf | tel | tel[éf] | tfno ) \. |        # abbreviations
+   (?: m[óo]vil | celular ) (?: es )? |        # mobile
+   ll[aá]m[aeoáéó][bdilmrs]?\w*                # conjugation for "llamar"
+ )
+ (?! \w )
+"""
+
+
 PII_TASKS = [
     {
         "class": "regex",
@@ -20,10 +33,10 @@ PII_TASKS = [
             "type": PiiEnum.PHONE_NUMBER,
             "subtype": "international",
             "context": {
-                "value": ["tf", "teléfono", "telefono"],
-                "width": [16, 0],
-                "type": "word",
-            },
+                "type": "regex",
+                "value": CONTEXT_REGEX,
+                "width": [64, 64]
+            }
         }
     }
 ]
