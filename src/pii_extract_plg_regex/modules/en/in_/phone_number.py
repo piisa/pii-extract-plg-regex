@@ -41,7 +41,7 @@ CONTEXT_REGEX = r"""
 _REGEX = None
 
 
-def Indian_phone_number(text: str) -> Iterable[Tuple[str, int]]:
+def IN_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
     Indian Phone Numbers
     """
@@ -65,7 +65,7 @@ def Indian_phone_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": Indian_phone_number,
+    "task": IN_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
         "method": "soft-regex,context",

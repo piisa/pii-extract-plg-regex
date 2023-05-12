@@ -19,7 +19,10 @@ of the PII elements are language- and/or -country dependent.
 The package
  * needs at least Python 3.8
  * needs the [pii-data] and the [pii-extract-base] base packages
- * uses the [python-stdnum] package to validate numeric identifiers
+ * uses the [regex] package (instead of the standard `re` package in the core
+   Python library)
+ * uses the [python-stdnum] package to validate many identifiers (and the 
+   [python-phonenumbers] to validate phone numbers)
 
 
 ## Usage
@@ -56,3 +59,5 @@ To add a new PII processing task, please see the [contributing instructions].
 [pytest]: https://docs.pytest.org
 [usage]: doc/usage.md
 [contributing instructions]: doc/contributing.md
+[python-phonenumbers]: https://github.com/daviddrysdale/python-phonenumbers
+[regex]: https://github.com/mrabarnett/mrab-regex

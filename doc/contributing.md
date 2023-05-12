@@ -28,7 +28,7 @@ repository with the following changes:
 ## Task implementation
 
 A task can be implemented with either of three shapes: regex, function or
-lass. See [task implementation] for a description of how to implement each of
+class. See [task implementation] for a description of how to implement each of
 these, including where to add the required documentation explaining the task.
 When creating a regex, follow the [PII regex guidelines] to ensure
 compatibility.
