@@ -12,7 +12,7 @@ from stdnum.es import dni, nie
 
 from pii_data.types import PiiEnum, PiiEntity
 from pii_data.types.doc import DocumentChunk
-from pii_extract.build.task import BaseMultiPiiTask
+from pii_extract.build.task import BaseMultiPiiTask, dbg_task, dbg_item
 
 # Regex for DNI & NIE
 _DNI_PATTERN = r"(?: \b | (?<= DNI) ) \d{6,8} -? [A-KJ-NP-TV-Z] \b"
@@ -36,18 +36,24 @@ class Spanish_DNI_NIE(BaseMultiPiiTask):
         Find & validate instances of either DNI or NIE
         """
         info_dni, info_nie = self.pii_info
+        if self.debug:
+            dbg_task("Mlt", info_dni, info_nie)
 
         # DNI
         for item in self.dni.finditer(chunk.data):
             item_value = item.group()
             if dni.is_valid(item_value):
+                if self.debug:
+                    dbg_item(item_value)
                 yield PiiEntity(info_dni, item_value, chunk.id, item.start())
 
         # NIE
         for item in self.nie.finditer(chunk.data):
             item_value = item.group()
             if nie.is_valid(item_value):
-                yield PiiEntity(info_nie, item_value, chunk.id,item.start())
+                if self.debug:
+                    dbg_item(item_value)
+                yield PiiEntity(info_nie, item_value, chunk.id, item.start())
 
 
 # ---------------------------------------------------------------------

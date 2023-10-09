@@ -20,7 +20,7 @@ PII_TASKS = [
             "type": PiiEnum.PHONE_NUMBER,
             "subtype": "international",
             "context": {
-                "value": ["téléphone, telephone, tél., tel, mobile"],
+                "value": ["téléphone", "telephone", "tél.", "tel", "mobile"],
                 "width": [16, 0],
                 "type": "word",
             },

@@ -25,9 +25,9 @@ TESTCASES = [
     # No valid contexts
     ("number: +34983453999", "number: +34983453999"),
     ("phonograph +34983453999", "phonograph +34983453999"),
-    # Too short/long a number
+    # Too short/long a number (shortest  are 7, ITU-T E. 164 says max is 15)
     ("phone number: +34983", "phone number: +34983"),
-    ("phone number: +349834539996781", "phone number: +349834539996781")
+    ("phone number: +3498345399967810", "phone number: +3498345399967810")
 ]
 
 
