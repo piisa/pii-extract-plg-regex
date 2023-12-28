@@ -1,6 +1,6 @@
 """
 Detection of phone numbers written with international notation (i.e. with
-prefix and country code), for FR language
+prefix and country code), with no language constraints
 """
 
 
@@ -18,12 +18,7 @@ PII_TASKS = [
         "doc": "detect phone numbers using international notation",
         "pii": {
             "type": PiiEnum.PHONE_NUMBER,
-            "subtype": "international",
-            "context": {
-                "value": ["téléphone", "telephone", "tél.", "tel", "mobile"],
-                "width": [16, 0],
-                "type": "word",
-            },
+            "subtype": "international"
         }
     }
 ]

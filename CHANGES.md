@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+ * fix: improved international phone number regex
+ * fix: fixed context for French international phone number
+ * updated requirements
+ * added debug output
+ * added international phone numbers (without language context for now)
+   for languages: de, pt, it
+
 ## 0.4.1
  * plugin_loader accepts the "languages" argument
 
