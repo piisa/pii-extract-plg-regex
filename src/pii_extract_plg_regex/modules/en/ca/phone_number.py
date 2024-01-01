@@ -41,7 +41,7 @@ _REGEX = None
 
 def CA_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    US Phone Numbers
+    Canadian phone number, using regex + number pattern validation + context
     """
     # Compile regex if needed
     global _REGEX
@@ -66,7 +66,7 @@ PII_TASKS = {
     "task": CA_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "method": "soft-regex,context",
+        "method": "soft-regex,pattern-validation,context",
         "context": {
             "type": "regex",
             "value": CONTEXT_REGEX,

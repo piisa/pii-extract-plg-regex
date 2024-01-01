@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1
+ * refactored PII description fields (`name`, `method`, `doc`) for consistency
+ * fixed debug messages in es/es/govid
+ * updated requirements (python-stdnum)
+ * fixed unit tests for Python 3.10
+
 ## 0.5.0
  * fix: improved international phone number regex
  * fix: fixed context for French international phone number

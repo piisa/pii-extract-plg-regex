@@ -16,9 +16,9 @@ from pii_data.types import PiiEnum
 _AADHAAR_REGEX = re.compile(r"[2-9]\d{3}\ ?\d{4}\ ?\d{4}", flags=re.X)
 
 
-def aadhaar_number(doc: str) -> Iterable[str]:
+def IN_aadhaar_number(doc: str) -> Iterable[str]:
     """
-    Aadhaar identity number from India (detect and validate)
+    Aadhaar identity number from India, using regex + checksum validation
     """
     for candidate in _AADHAAR_REGEX.findall(doc):
         if aadhaar.is_valid(candidate):
@@ -27,8 +27,8 @@ def aadhaar_number(doc: str) -> Iterable[str]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": aadhaar_number,
-    "method": "regex,checksum",
+    "task": IN_aadhaar_number,
+    "method": "soft-regex,checksum",
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "Indian Aadhaar number"

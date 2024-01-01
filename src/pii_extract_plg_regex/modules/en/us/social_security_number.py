@@ -23,6 +23,13 @@ _SSN_PATTERN = r"""
 """
 
 
-PII_TASKS = [
-    (PiiEnum.GOV_ID, _SSN_PATTERN, "Social Security Number")
-]
+PII_TASKS = {
+    "class": "regex",
+    "task": _SSN_PATTERN,
+    "name": "US Social Security Number",
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "social security number",
+        "method": "soft-regex"
+    }
+}

@@ -22,7 +22,9 @@ _CC_PATTERN = r"\d{8} \x20? \d \x20? [A-Z0-9]{2}\d"
 
 class PortugueseNifCc(BaseMultiPiiTask):
     """
-    Portuguese Government-issued identifiers: Número de Identificação Fiscal (NIF) & Cartão de Cidadão (CC)
+    Portuguese Government-issued identifiers, using regex + checksum:
+      - Número de Identificação Fiscal (NIF)
+      - Cartão de Cidadão (CC)
     """
     pii_name = "Portuguese NIF and CC numbers"
     pii_method = "regex,checksum"

@@ -18,9 +18,9 @@ _CNP_PATTERN = r"\b \d{13} \b"
 # compiled regex
 _REGEX = None
 
-def Romanian_CNP(text: str) -> Iterable[Tuple[str, int]]:
+def RO_CNP(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Romanian Cod Numeric Personal
+    Romanian Cod Numeric Personal, using regex + checksum
     """
     # Compile regex if needed
     global _REGEX
@@ -39,7 +39,7 @@ def Romanian_CNP(text: str) -> Iterable[Tuple[str, int]]:
 # Task descriptor
 PII_TASKS = {
     "class": "callable",
-    "task": Romanian_CNP,
+    "task": RO_CNP,
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "Romanian CNP",

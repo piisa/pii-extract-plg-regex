@@ -46,7 +46,7 @@ _REGEX = None
 
 def ES_phone_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Spanish phone numbers, mobile & landline
+    Spanish phone number, using regex + pattern validation + context
     """
     # Compile regex if needed
     global _REGEX

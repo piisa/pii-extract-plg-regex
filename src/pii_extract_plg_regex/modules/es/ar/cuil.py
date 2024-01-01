@@ -36,9 +36,9 @@ _CUIL_PATTERN = r"""
 # compiled regex
 _REGEX = None
 
-def Argentinian_CUIL(text: str) -> Iterable[str]:
+def AR_CUIL(text: str) -> Iterable[str]:
     """
-    Argentinian Código Único de Identificación Laboral (CUIL)
+    Argentinian Código Único de Identificación Laboral (CUIL), using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX
@@ -57,7 +57,7 @@ def Argentinian_CUIL(text: str) -> Iterable[str]:
 # Task descriptor
 PII_TASKS = {
     "class": "callable",
-    "task": Argentinian_CUIL,
+    "task": AR_CUIL,
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "CUIL",

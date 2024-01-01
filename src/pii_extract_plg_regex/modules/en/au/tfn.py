@@ -15,9 +15,9 @@ _TFN_PATTERN = r"\b (?: \d{3} \s \d{3} \s \d{3} | \d{8,9} ) \b"
 _REGEX = None
 
 
-def tax_file_number(text: str) -> Iterable[Tuple[str, int]]:
+def AU_tax_file_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Australian Tax File Number (detect and validate)
+    Australian Tax File Number, using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX
@@ -31,4 +31,14 @@ def tax_file_number(text: str) -> Iterable[Tuple[str, int]]:
             yield item, match.start()
 
 
-PII_TASKS = [(PiiEnum.GOV_ID, tax_file_number, "Australian Tax File Number")]
+# ---------------------------------------------------------------------
+
+PII_TASKS = {
+    "class": "callable",
+    "task": AU_tax_file_number,
+    "pii": {
+        "type": PiiEnum.GOV_ID,
+        "subtype": "Australian Tax File Number",
+        "method": "weak-regex,checksum"
+    }
+}

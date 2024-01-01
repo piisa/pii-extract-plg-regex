@@ -26,9 +26,10 @@ _CCC_PATTERN = r"""
 _REGEX = None
 
 
-def spanish_bank_ccc(text: str) -> Iterable[Tuple[str, int]]:
+def ES_bank_ccc(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Spanish Bank Accounts (código cuenta cliente, 10-digit code, pre-IBAN)
+    Spanish Bank Accounts (código cuenta cliente, 10-digit code, pre-IBAN),
+    using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX
@@ -46,10 +47,10 @@ def spanish_bank_ccc(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": spanish_bank_ccc,
+    "task": ES_bank_ccc,
     "pii": {
         "type": PiiEnum.BANK_ACCOUNT,
-        "subtype": "ES Bank CCC",
+        "subtype": "ES bank CCC",
         "method": "soft-regex,checksum"
     }
 }

@@ -12,7 +12,7 @@ from stdnum.es import dni, nie
 
 from pii_data.types import PiiEnum, PiiEntity
 from pii_data.types.doc import DocumentChunk
-from pii_extract.build.task import BaseMultiPiiTask, dbg_task, dbg_item
+from pii_extract.build.task import BaseMultiPiiTask
 
 # Regex for DNI & NIE
 _DNI_PATTERN = r"(?: \b | (?<= DNI) ) \d{6,8} -? [A-KJ-NP-TV-Z] \b"
@@ -21,7 +21,9 @@ _NIE_PATTERN = r"(?: \b | (?<= NIE) ) [X-Z] \d{7} -? [A-KJ-NP-TV-Z] \b"
 
 class Spanish_DNI_NIE(BaseMultiPiiTask):
     """
-    Spanish Government-issued identifiers: Documento Nacional de Identidad (DNI) & Número de Identificación de Extranjero (NIE)
+    Spanish Government-issued identifiers, using regex + checksum validation:
+     - Documento Nacional de Identidad (DNI)
+     - Número de Identificación de Extranjero (NIE)
     """
 
     def __init__(self, **kwargs):
@@ -37,14 +39,14 @@ class Spanish_DNI_NIE(BaseMultiPiiTask):
         """
         info_dni, info_nie = self.pii_info
         if self.debug:
-            dbg_task("Mlt", info_dni, info_nie)
+            self.dbg_task("Mlt")
 
         # DNI
         for item in self.dni.finditer(chunk.data):
             item_value = item.group()
             if dni.is_valid(item_value):
                 if self.debug:
-                    dbg_item(item_value)
+                    self.dbg_item(item_value)
                 yield PiiEntity(info_dni, item_value, chunk.id, item.start())
 
         # NIE
@@ -52,7 +54,7 @@ class Spanish_DNI_NIE(BaseMultiPiiTask):
             item_value = item.group()
             if nie.is_valid(item_value):
                 if self.debug:
-                    dbg_item(item_value)
+                    self.dbg_item(item_value)
                 yield PiiEntity(info_nie, item_value, chunk.id, item.start())
 
 

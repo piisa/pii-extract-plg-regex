@@ -22,8 +22,8 @@ _DNI_PATTERN = r"""
 PII_TASKS = {
     "class": "regex",
     "task": _DNI_PATTERN,
-    "name": "Argentinian DNI",
-    "doc": "Argentinian Documento Nacional de Identidad (DNI)",
+    "name": "AR DNI",
+    "doc": "Argentinian Documento Nacional de Identidad (DNI), using regex + context",
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "DNI",

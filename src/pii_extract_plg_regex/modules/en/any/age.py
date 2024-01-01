@@ -19,6 +19,7 @@ _AGE_REGEX = r"""
 
 PII_TASKS = {
     "class": "regex",
+    "name": "age regex",
     "task": _AGE_REGEX,
     "pii": {
         "type": PiiEnum.AGE,
