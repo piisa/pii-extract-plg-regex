@@ -5,6 +5,7 @@
  * fixed debug messages in es/es/govid
  * updated requirements (python-stdnum)
  * fixed unit tests for Python 3.10
+ * fix: added missing `__init__.py` in modules
 
 ## 0.5.0
  * fix: improved international phone number regex

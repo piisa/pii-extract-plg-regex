@@ -73,7 +73,7 @@ PII_TASKS = {
     "task": ES_phone_number,
     "pii": {
         "type": PiiEnum.PHONE_NUMBER,
-        "method": "soft-regex,context",
+        "method": "soft-regex,pattern-validation,context",
         "context": {
             "type": "regex",
             "value": CONTEXT_REGEX,
