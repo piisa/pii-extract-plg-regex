@@ -17,9 +17,9 @@ _ABN_PATTERN = r"\b (?: \d{2} \s \d{3} \s \d{3} \s \d{3} | \d{11} ) \b"
 _REGEX = None
 
 
-def australian_business_number(text: str) -> Iterable[Tuple[str, int]]:
+def AU_business_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Australian Business Number (detect and validate)
+    Australian Business Number, using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX
@@ -37,7 +37,7 @@ def australian_business_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": australian_business_number,
+    "task": AU_business_number,
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "Australian Business Number",

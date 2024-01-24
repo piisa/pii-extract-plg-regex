@@ -20,9 +20,9 @@ _SIN_PATTERN = r"\b \d{3} [-\ ] \d{3} [-\ ] \d{3} \b"
 # compiled regex
 _REGEX = None
 
-def Canadian_social_insurance_number(text: str) -> Iterable[Tuple[str, int]]:
+def CA_social_insurance_number(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Canadian Social Insurance Number (detect and validate)
+    Canadian Social Insurance Number, using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX
@@ -40,7 +40,7 @@ def Canadian_social_insurance_number(text: str) -> Iterable[Tuple[str, int]]:
 
 PII_TASKS = {
     "class": "callable",
-    "task": Canadian_social_insurance_number,
+    "task": CA_social_insurance_number,
     "method": "soft-regex,checksum",
     "pii": {
         "type": PiiEnum.GOV_ID,

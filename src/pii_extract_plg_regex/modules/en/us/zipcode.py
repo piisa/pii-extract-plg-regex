@@ -63,7 +63,7 @@ USPS_STATE_ABBR = [
 ]
 
 
-# Regex for phone numbers
+# Regex for US zipcode
 ZIPCODE = r"""
    (?<! \w )
    (?: 1[- ] )?
@@ -87,7 +87,7 @@ def _zipcode_regex():
 
 def US_zipcode(text: str) -> Iterable[Tuple[str, int]]:
     """
-    US zip codes
+    US zip code, using regex
     """
     # Compile regex if needed
     global _REGEX

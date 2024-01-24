@@ -15,7 +15,7 @@ PII_TASKS = [
         "class": "regex",
         "task": PATTERN_INT_PHONE,
         "name": "international phone number",
-        "doc": "detect phone numbers using international notation",
+        "doc": "phone numbers using international notation",
         "pii": {
             "type": PiiEnum.PHONE_NUMBER,
             "subtype": "international"

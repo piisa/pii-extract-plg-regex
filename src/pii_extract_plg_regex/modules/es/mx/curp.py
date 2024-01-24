@@ -22,7 +22,7 @@ _REGEX = None
 
 def MX_CURP(text: str) -> Iterable[Tuple[str, int]]:
     """
-    Mexican Clave Única de Registro de Población (CURP)
+    Mexican Clave Única de Registro de Población (CURP), using regex + checksum validation
     """
     # Compile regex if needed
     global _REGEX

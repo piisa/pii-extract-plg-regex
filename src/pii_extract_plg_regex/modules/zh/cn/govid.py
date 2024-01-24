@@ -22,8 +22,8 @@ _GOV_ID_REGEX = re.compile(_GOV_ID_PATTERN, flags=re.X)
 def ric_or_passport(doc: str) -> Iterable[str]:
     """
     Chinese government-issued identifiers:
-      - RIC (Resident Identification Card number), detect and validate
-      - Passport number, detect only
+      - RIC (Resident Identification Card number), using regex + checksum
+      - Passport number, using regex
     """
     for g in _GOV_ID_REGEX.finditer(doc):
         if g.group(1) and ric.is_valid(g.group(1)):
