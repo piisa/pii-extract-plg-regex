@@ -27,6 +27,7 @@ PII_TASKS = {
     "class": "regex",
     "task": _SSN_PATTERN,
     "name": "US Social Security Number",
+    "doc": "US Social Security Number, using regex",
     "pii": {
         "type": PiiEnum.GOV_ID,
         "subtype": "social security number",
